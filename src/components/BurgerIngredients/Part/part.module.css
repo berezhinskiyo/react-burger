@@ -1,0 +1,20 @@
+.part {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+
+}
+
+
+.part__price {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto; 
+}
+
+.part__price__text {
+ 
+  text-align: center;
+  margin: 0 auto;
+}

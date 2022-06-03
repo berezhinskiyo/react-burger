@@ -1,0 +1,22 @@
+.container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container__ingredients {
+  height:444px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  gap: 10px;
+}
+.price {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 0 auto;
+  justify-content: baseline;
+  align-items: center; 
+}
