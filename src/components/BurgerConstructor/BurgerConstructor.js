@@ -1,13 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css'
-import { data } from '../../utils/data'
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 class BurgerConstructor extends React.Component {
   render() {
 
-    const buns = data.filter(item => item.type === "bun").map((item, index) => {
+    const buns = this.props.data.filter(item => item.type === "bun").map((item, index) => {
       return <ConstructorElement key={item._id}
         type={index === 0 ? "top" : "bottom"}
         isLocked={true}
@@ -17,7 +17,7 @@ class BurgerConstructor extends React.Component {
 
     });
 
-    const others = data.filter(item => item.type !== "bun").map(item => {
+    const others = this.props.data.filter(item => item.type !== "bun").map(item => {
       return (<ConstructorElement key={item._id}
         text={`${item.name}`}
         price={item.price}
@@ -49,4 +49,15 @@ class BurgerConstructor extends React.Component {
   }
 }
 
+
+const itemPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired
+});
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(itemPropTypes)
+}
 export default BurgerConstructor;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './part.module.css'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -18,5 +19,6 @@ class Part extends React.Component {
     );
   }
 }
+
 
 export default Part;

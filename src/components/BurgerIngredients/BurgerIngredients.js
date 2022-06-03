@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css'
 import Part from './Part/Part'
-import { data } from '../../utils/data'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
@@ -18,15 +18,15 @@ class BurgerIngredients extends React.Component {
   };
 
   render() {
-    const buns = data.filter(item => item.type === "bun").map(item => {
+    const buns = this.props.data.filter(item => item.type === "bun").map(item => {
       return <Part data={item} key={item._id}></Part>;
     });
 
-    const sauce = data.filter(item => item.type === "sauce").map(item => {
+    const sauce = this.props.data.filter(item => item.type === "sauce").map(item => {
       return <Part data={item} key={item._id}></Part>;
     });
 
-    const main = data.filter(item => item.type === "main").map(item => {
+    const main = this.props.data.filter(item => item.type === "main").map(item => {
       return <Part data={item} key={item._id}></Part>;
     });
 
@@ -65,5 +65,14 @@ class BurgerIngredients extends React.Component {
     );
   }
 }
-
+const itemPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired
+});
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(itemPropTypes)
+}
 export default BurgerIngredients;
