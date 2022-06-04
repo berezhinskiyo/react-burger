@@ -1,27 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css'
-import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 class BurgerConstructor extends React.Component {
   render() {
 
     const buns = this.props.data.filter(item => item.type === "bun").map((item, index) => {
-      return <ConstructorElement key={item._id}
-        type={index === 0 ? "top" : "bottom"}
-        isLocked={true}
-        text={`${item.name} ${index === 0 ? '(верх)' : '(низ)'}`}
-        price={item.price}
-        thumbnail={item.image} />;
+      return (<div className='pl-10'>
+        <ConstructorElement key={item._id}
+          type={index === 0 ? "top" : "bottom"}
+          isLocked={true}
+          text={`${item.name} ${index === 0 ? '(верх)' : '(низ)'}`}
+          price={item.price}
+          thumbnail={item.image} />
+      </div>);
 
     });
 
     const others = this.props.data.filter(item => item.type !== "bun").map(item => {
-      return (<ConstructorElement key={item._id}
-        text={`${item.name}`}
-        price={item.price}
-        thumbnail={item.image} />);
+      return (<li className={styles.constructor__element} key={item._id}>
+        <span className="pr-4">
+          <DragIcon type="primary" />
+        </span>
+        <div className={`${styles.item} pr-4`}>
+          <ConstructorElement key={item._id}
+            text={`${item.name}`}
+            price={item.price}
+            thumbnail={item.image} />
+        </div>
+      </li>);
 
     });
 
@@ -30,9 +39,9 @@ class BurgerConstructor extends React.Component {
         <div className={styles.container}>
           {buns[0]}
         </div>
-        <div className={styles.container__ingredients}>
+        <ul className={styles.container__ingredients}>
           {others}
-        </div>
+        </ul>
         <div className={styles.container}>
           {buns[1]}
         </div>
