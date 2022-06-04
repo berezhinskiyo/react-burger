@@ -7,15 +7,35 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 class BurgerIngredients extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.myRef1 = React.createRef();
+    this.myRef2 = React.createRef()
+    this.myRef3 = React.createRef()
+  }
 
-  state = { tab: 'two' };
+  state = { tab: 'one' };
 
   setTab = (val) => {
+    switch (val) {
+      case 'one':
+        this.myRef1.current.scrollIntoView();
+        break;
+      case 'two':
+        this.myRef2.current.scrollIntoView();
+        break;
+      default:
+        this.myRef3.current.scrollIntoView();
+        break;
+    }
+
     this.setState({
       tab: val
     });
 
+
   };
+
 
   render() {
     const buns = this.props.data.filter(item => item.type === "bun").map(item => {
@@ -46,17 +66,17 @@ class BurgerIngredients extends React.Component {
 
         </div>
         <div className={styles.container__ingredient}>
-          <h2 className='text text_type_main-medium pt-10 pb-6'>Булки</h2>
+          <h2 ref={this.myRef1} className='text text_type_main-medium pt-10 pb-6'>Булки</h2>
 
           <div className={styles.container__parts}>
             {buns}
           </div>
-          <h2 className='text text_type_main-medium pt-10 pb-6'>Соусы</h2>
+          <h2 ref={this.myRef2} className='text text_type_main-medium pt-10 pb-6'>Соусы</h2>
           <div className={styles.container__parts}>
             {sauce}
           </div>
 
-          <h2 className='text text_type_main-medium pt-10 pb-6'>Начинки</h2>
+          <h2 ref={this.myRef3} className='text text_type_main-medium pt-10 pb-6'>Начинки</h2>
           <div className={styles.container__parts}>
             {main}
           </div>
