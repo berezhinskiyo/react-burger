@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css'
-import Part from './Part/Part'
+import Ingredient from './Ingredient/Ingredient'
+import { ingredientType } from '../../utils/types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
@@ -9,23 +10,26 @@ class BurgerIngredients extends React.Component {
 
   constructor(props) {
     super(props);
-    this.myRef1 = React.createRef();
-    this.myRef2 = React.createRef()
-    this.myRef3 = React.createRef()
+    this.bunsRef = React.createRef();
+    this.saucesRef = React.createRef()
+    this.mainRef = React.createRef()
   }
+  bun = 'bun';
+  sauce = 'sauce';
+  main = 'main';
 
-  state = { tab: 'one' };
+  state = { tab: this.bun };
 
   setTab = (val) => {
     switch (val) {
-      case 'one':
-        this.myRef1.current.scrollIntoView();
+      case this.bun:
+        this.bunsRef.current.scrollIntoView({ behavior: "smooth" });
         break;
-      case 'two':
-        this.myRef2.current.scrollIntoView();
+      case this.sauce:
+        this.saucesRef.current.scrollIntoView({ behavior: "smooth" });
         break;
       default:
-        this.myRef3.current.scrollIntoView();
+        this.mainRef.current.scrollIntoView({ behavior: "smooth" });
         break;
     }
 
@@ -38,45 +42,45 @@ class BurgerIngredients extends React.Component {
 
 
   render() {
-    const buns = this.props.data.filter(item => item.type === "bun").map(item => {
-      return <Part data={item} key={item._id}></Part>;
+    const buns = this.props.data.filter(item => item.type === this.bun).map(item => {
+      return <Ingredient data={item} key={item._id}></Ingredient>;
     });
 
-    const sauce = this.props.data.filter(item => item.type === "sauce").map(item => {
-      return <Part data={item} key={item._id}></Part>;
+    const sauce = this.props.data.filter(item => item.type === this.sauce).map(item => {
+      return <Ingredient data={item} key={item._id}></Ingredient>;
     });
 
-    const main = this.props.data.filter(item => item.type === "main").map(item => {
-      return <Part data={item} key={item._id}></Part>;
+    const main = this.props.data.filter(item => item.type === this.main).map(item => {
+      return <Ingredient data={item} key={item._id}></Ingredient>;
     });
 
     return (
       <section className={styles.container}>
         <h1 className='text text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
         <div className={styles.container__navigator}>
-          <Tab value="one" active={this.state.tab === 'one'} onClick={this.setTab}>
+          <Tab value={this.bun} active={this.state.tab === this.bun} onClick={this.setTab}>
             Булки
           </Tab>
-          <Tab value="two" active={this.state.tab === 'two'} onClick={this.setTab}>
+          <Tab value={this.sauce} active={this.state.tab === this.sauce} onClick={this.setTab}>
             Соусы
           </Tab>
-          <Tab value="three" active={this.state.tab === 'three'} onClick={this.setTab}>
+          <Tab value={this.main} active={this.state.tab === this.main} onClick={this.setTab}>
             Начинки
           </Tab>
 
         </div>
         <div className={styles.container__ingredient}>
-          <h2 ref={this.myRef1} className='text text_type_main-medium pt-10 pb-6'>Булки</h2>
+          <h2 ref={this.bunsRef} className='text text_type_main-medium pt-10 pb-6'>Булки</h2>
 
           <div className={styles.container__parts}>
             {buns}
           </div>
-          <h2 ref={this.myRef2} className='text text_type_main-medium pt-10 pb-6'>Соусы</h2>
+          <h2 ref={this.saucesRef} className='text text_type_main-medium pt-10 pb-6'>Соусы</h2>
           <div className={styles.container__parts}>
             {sauce}
           </div>
 
-          <h2 ref={this.myRef3} className='text text_type_main-medium pt-10 pb-6'>Начинки</h2>
+          <h2 ref={this.mainRef} className='text text_type_main-medium pt-10 pb-6'>Начинки</h2>
           <div className={styles.container__parts}>
             {main}
           </div>
@@ -85,14 +89,8 @@ class BurgerIngredients extends React.Component {
     );
   }
 }
-const itemPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired
-});
+
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(itemPropTypes)
+  data: PropTypes.arrayOf(ingredientType)
 }
 export default BurgerIngredients;
