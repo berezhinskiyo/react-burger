@@ -7,3 +7,9 @@ export const ingredientType = PropTypes.shape({
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired
 });
+
+export const orderType = PropTypes.shape({
+    number: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+});

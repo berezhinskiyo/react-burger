@@ -1,4 +1,11 @@
-export  const  data = [
+export const order =
+{
+    "number": "034536",
+    "description": "Дождитесь готовности на орбитальной станции",
+    "status": "Ваш заказ начали готовить"
+}
+
+export const data = [
     {
         "_id": "60666c42cc7b410027a1a9b1",
         "name": "Краторная булка N-200i",

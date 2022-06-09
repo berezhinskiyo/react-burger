@@ -2,10 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css'
 import { ingredientType } from '../../utils/types'
+import OrderDetails from './OrderDetails/OrderDetails'
+import Modal from './../Modal/Modal'
+import { order } from '../../utils/data'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 const BurgerConstructor = (props) => {
+
+  const [visible, setVisible] = React.useState(false);
+
+  const handleOpenModal = () => {
+    setVisible(true);
+  }
+  const handleCloseModal = () => {
+    setVisible(false);
+  }
+  const handleEscKeydown = (e) => {
+    e.key === "Escape" && handleCloseModal();
+  };
+  const modal = (
+    <Modal
+      title=""
+      onClose={handleCloseModal}
+      onEscKeydown={handleEscKeydown}
+    >
+      <OrderDetails data={order} onClose={handleCloseModal} ></OrderDetails>
+    </Modal>
+  );
 
   const buns = props.data.filter(item => item.type === "bun").map((item, index) => {
     return (<div className='pl-10'>
@@ -48,8 +72,8 @@ const BurgerConstructor = (props) => {
 
       <div className={`${styles.price} pt-10 pb-1`}>
         <p className='text text_type_digits-medium pr-10'>10000 <CurrencyIcon /></p>
-
-        <Button type="primary" >
+        {visible && modal}
+        <Button type="primary" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>
