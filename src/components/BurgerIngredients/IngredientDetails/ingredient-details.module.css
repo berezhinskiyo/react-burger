@@ -1,0 +1,30 @@
+.details {
+
+  display: flex;
+  flex-direction: column;
+}
+
+.details__img{
+  height: 240px;
+  width: 480px;
+  margin: auto;
+}
+
+.details__nutrients {
+  display: flex;
+  flex-direction: row;
+  justify-items: start;
+  margin: auto;
+}
+
+.details__nutrients__block {
+  display: flex;
+  flex-direction: column;
+  justify-items: start;
+  align-content: center;
+  color: #8585AD;
+}
+
+.details__text{
+  margin: auto;
+}

@@ -5,5 +5,21 @@ export const ingredientType = PropTypes.shape({
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired
+    image: PropTypes.node.isRequired
+});
+
+export const ingredientDetailsType = PropTypes.shape({
+   
+    name: PropTypes.string.isRequired,
+    image: PropTypes.node.isRequired,
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired
+});
+
+export const orderType = PropTypes.shape({
+    number: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
 });

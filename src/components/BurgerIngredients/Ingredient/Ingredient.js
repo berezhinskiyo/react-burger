@@ -1,27 +1,48 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './ingredient.module.css'
+import Modal from './../../Modal/Modal'
+import IngredientDetails from './../IngredientDetails/IngredientDetails'
 import { ingredientType } from '../../../utils/types'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
-class Ingredient extends React.Component {
-  render() {
-    return (
-      <div className={`${styles.ingredient} pl-4 pr-4`} >
-        <Counter count={2} />
-        <img src={this.props.data.image} className={`${styles.ingredient__img} pl-4 pr-4`} alt={this.props.data.name} />
-        <div className={`${styles.ingredient__price} pt-1 pb-1`}>
-          <p className='text text_type_digits-default pr-2'>{this.props.data.price}</p>
-          <CurrencyIcon />
-        </div>
-        <p className={`${styles.ingredient__price__text} text text_type_main-default`}>{this.props.data.name}</p>
+const Ingredient = ({data}) => {
 
-      </div >
-    );
+
+  const [visible, setVisible] = React.useState(false);
+
+  const handleOpenModal = () => {
+    setVisible(true);
   }
+  const handleCloseModal = () => {
+    setVisible(false);
+  }
+
+  const modal = (
+    <Modal
+      title="Детали заказа"
+      onClose={handleCloseModal}
+    >
+      <IngredientDetails data={data} onClose={handleCloseModal} ></IngredientDetails>
+    </Modal>
+  );
+
+  return (
+    <div className={`${styles.ingredient} pl-4 pr-4`} >
+      <Counter count={2} />
+      <img src={data.image} className={`${styles.ingredient__img} pl-4 pr-4`} alt={data.name} onClick={handleOpenModal} />
+      {visible && modal}
+      <div className={`${styles.ingredient__price} pt-1 pb-1`}>
+        <p className='text text_type_digits-default pr-2'>{data.price}</p>
+        <CurrencyIcon />
+      </div>
+      <p className={`${styles.ingredient__price__text} text text_type_main-default`}>{data.name}</p>
+
+    </div >
+  );
 }
+
 Ingredient.propTypes = {
-  data: ingredientType
+  data: ingredientType.isRequired
 }
 
 export default Ingredient;
