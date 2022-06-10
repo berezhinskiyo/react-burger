@@ -6,8 +6,7 @@ import { ingredientType } from '../../utils/types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
-const BurgerIngredients=(props)=> {
-
+const BurgerIngredients = ({ data }) => {
 
   const bunsRef = React.createRef();
   const saucesRef = React.createRef()
@@ -35,17 +34,11 @@ const BurgerIngredients=(props)=> {
   };
 
 
-  const buns = props.data.filter(item => item.type === bun).map(item => {
-    return <Ingredient data={item} key={item._id}></Ingredient>;
-  });
+  const buns = data.filter(item => item.type === bun);
 
-  const sauces = props.data.filter(item => item.type === sauce).map(item => {
-    return <Ingredient data={item} key={item._id}></Ingredient>;
-  });
+  const sauces = data.filter(item => item.type === sauce);
 
-  const mains = props.data.filter(item => item.type === main).map(item => {
-    return <Ingredient data={item} key={item._id}></Ingredient>;
-  });
+  const mains = data.filter(item => item.type === main);
 
   return (
     <section className={styles.container}>
@@ -66,16 +59,22 @@ const BurgerIngredients=(props)=> {
         <h2 ref={bunsRef} className='text text_type_main-medium pt-10 pb-6'>Булки</h2>
 
         <div className={styles.container__parts}>
-          {buns}
+          {buns.map(item => {
+            return <Ingredient data={item} key={item._id}></Ingredient>;
+          })}
         </div>
         <h2 ref={saucesRef} className='text text_type_main-medium pt-10 pb-6'>Соусы</h2>
         <div className={styles.container__parts}>
-          {sauces}
+          {sauces.map(item => {
+            return <Ingredient data={item} key={item._id}></Ingredient>;
+          })}
         </div>
 
         <h2 ref={mainRef} className='text text_type_main-medium pt-10 pb-6'>Начинки</h2>
         <div className={styles.container__parts}>
-          {mains}
+          {mains.map(item => {
+            return <Ingredient data={item} key={item._id}></Ingredient>;
+          })}
         </div>
       </div>
     </section>
@@ -83,6 +82,6 @@ const BurgerIngredients=(props)=> {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType)
+  data: PropTypes.arrayOf(ingredientType).isRequired
 }
 export default BurgerIngredients;

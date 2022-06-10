@@ -1,21 +1,24 @@
 import * as ReactDOM from 'react-dom';
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './modal.module.css'
 import ModalOverlay from './../ModalOverlay/ModalOverlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
+const modalRoot = document.getElementById("react-modals");
+const Modal = ({ title, onClose, children }) => {
 
-const Modal = ({ title, onClose, onEscKeydown, children }) => {
-    const modalRoot = document.getElementById("react-modals");
- 
+    const handleEscKeydown = (e) => {
+        e.key === "Escape" && onClose();
+      };
     React.useEffect(() => {
-        document.addEventListener('keydown', onEscKeydown);
+        document.addEventListener('keydown', handleEscKeydown);
 
         return () => {
-            document.removeEventListener('keydown', onEscKeydown);
+            document.removeEventListener('keydown', handleEscKeydown);
         };
-    }, []);
+    }, [handleEscKeydown]);
 
     return ReactDOM.createPortal(
         (
@@ -37,6 +40,13 @@ const Modal = ({ title, onClose, onEscKeydown, children }) => {
     );
 
 }
-
+Modal.propTypes = {
+    title: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]).isRequired
+}
 
 export default Modal;

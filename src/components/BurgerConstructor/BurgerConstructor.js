@@ -8,7 +8,7 @@ import { order } from '../../utils/data'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
-const BurgerConstructor = (props) => {
+const BurgerConstructor = ({ data }) => {
 
   const [visible, setVisible] = React.useState(false);
 
@@ -18,56 +18,57 @@ const BurgerConstructor = (props) => {
   const handleCloseModal = () => {
     setVisible(false);
   }
-  const handleEscKeydown = (e) => {
-    e.key === "Escape" && handleCloseModal();
-  };
+
   const modal = (
-    <Modal
-      title=""
-      onClose={handleCloseModal}
-      onEscKeydown={handleEscKeydown}
-    >
-      <OrderDetails data={order} onClose={handleCloseModal} ></OrderDetails>
+    <Modal title="" onClose={handleCloseModal}>
+      <OrderDetails data={order} onClose={handleCloseModal} />
     </Modal>
   );
 
-  const buns = props.data.filter(item => item.type === "bun").map((item, index) => {
-    return (<div className='pl-10'>
-      <ConstructorElement key={item._id}
-        type={index === 0 ? "top" : "bottom"}
-        isLocked={true}
-        text={`${item.name} ${index === 0 ? '(верх)' : '(низ)'}`}
-        price={item.price}
-        thumbnail={item.image} />
-    </div>);
-
-  });
-
-  const others = props.data.filter(item => item.type !== "bun").map(item => {
-    return (<li className={styles.constructor__element} key={item._id}>
-      <span className="pr-4">
-        <DragIcon type="primary" />
-      </span>
-      <div className={`${styles.item} pr-4`}>
-        <ConstructorElement key={item._id}
-          text={`${item.name}`}
-          price={item.price}
-          thumbnail={item.image} />
-      </div>
-    </li>);
-
-  });
+  const bun = data.filter(item => item.type === "bun").at(1);
+  const others = data.filter(item => item.type !== "bun");
 
   return (
     <section className={`${styles.container} pt-25`} >
       <div className={styles.container}>
-        {buns[0]}
+        {
+          bun &&
+          (<div className='pl-10' key={bun._id}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image} />
+          </div>)
+        }
       </div>
       <ul className={styles.container__ingredients}>
-        {others}
+        {others.map(item => {
+          return (<li className={styles.constructor__element} key={item._id}>
+            <span className="pr-4">
+              <DragIcon type="primary" />
+            </span>
+            <div className={`${styles.item} pr-4`}>
+              <ConstructorElement key={item._id}
+                text={`${item.name}`}
+                price={item.price}
+                thumbnail={item.image} />
+            </div>
+          </li>);
+
+        })}
       </ul>
       <div className={styles.container}>
-        {buns[1]}
+        {bun &&
+          (<div className='pl-10' key={bun._id}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image} />
+          </div>)}
       </div>
 
       <div className={`${styles.price} pt-10 pb-1`}>
@@ -81,10 +82,7 @@ const BurgerConstructor = (props) => {
   );
 }
 
-
-
-
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType)
+  data: PropTypes.arrayOf(ingredientType).isRequired
 }
 export default BurgerConstructor;

@@ -13,7 +13,7 @@
   overflow: auto;
   gap: 10px;
   list-style: none;
-
+  margin: 0;
 }
 .price {
   display: flex;

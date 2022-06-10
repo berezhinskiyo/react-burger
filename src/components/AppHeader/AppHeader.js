@@ -26,7 +26,7 @@ const AppHeader = () => {
 
       <Logo />
       <div className={`${styles.block} pl-5 pr-5 pb-4 pt-4`}>
-        <ProfileIcon />
+        <ProfileIcon type="primary" />
         <p className={`text text_type_main-default text_color_inactive pl-2`}>
           Личный кабинет
         </p>

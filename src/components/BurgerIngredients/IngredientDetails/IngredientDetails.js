@@ -1,5 +1,5 @@
 import styles from './ingredient-details.module.css'
-import { ingredientType } from '../../../utils/types'
+import { ingredientDetailsType } from '../../../utils/types'
 
 const IngredientDetails = ({ data }) => {
 
@@ -36,7 +36,7 @@ const IngredientDetails = ({ data }) => {
 }
 
 IngredientDetails.propTypes = {
-    data: ingredientType
+    data: ingredientDetailsType
 }
 
 export default IngredientDetails;
