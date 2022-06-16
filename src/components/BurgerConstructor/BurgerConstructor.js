@@ -9,7 +9,7 @@ import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktiku
 
 
 const BurgerConstructor = ({ data }) => {
-
+  console.log(data);
   const [visible, setVisible] = React.useState(false);
 
   const handleOpenModal = () => {
