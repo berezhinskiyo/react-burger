@@ -1,18 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useMemo, useState, useCallback, useEffect } from 'react';
 import styles from './burger-constructor.module.css'
-import { ingredientType } from '../../utils/types'
 import OrderDetails from './OrderDetails/OrderDetails'
 import Modal from './../Modal/Modal'
-import { order } from '../../utils/data'
+import { postOrders } from '../../services/api';
+
+import { DataContext } from '../../services/appContext';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
-const BurgerConstructor = ({ data }) => {
-  console.log(data);
-  const [visible, setVisible] = React.useState(false);
+const BurgerConstructor = () => {
+
+  const { data } = useContext(DataContext);
+  const [visible, setVisible] = useState(false);
+
+
+
+  const bun = data.filter(item => item.type === "bun").at(1);
+  const notBun = data.filter(item => item.type !== "bun");
+  const randomSet = useMemo(() => Array.from({ length: 5 }, () => Math.floor(Math.random() * notBun.length)), [data]);
+  const others = useMemo(() => notBun.filter((item, index) => randomSet.includes(index)), [data]);
+  const Ids = useMemo(() => others && bun ? others.map(item => item._id) : [], [data]);
+
+  const [num, setNum] = useState(0);
+
+  const postOrdersWrapper = useCallback(() => {
+    return postOrders(Ids)
+      .then((response) => {
+        console.log(response);
+        setNum(response.order.number)
+      }
+      )
+      .catch((err) => console.log(err))
+  }, [data])
 
   const handleOpenModal = () => {
+    if (num === 0) {
+      postOrdersWrapper();
+    }
     setVisible(true);
   }
   const handleCloseModal = () => {
@@ -21,12 +45,18 @@ const BurgerConstructor = ({ data }) => {
 
   const modal = (
     <Modal title="" onClose={handleCloseModal}>
-      <OrderDetails data={order} onClose={handleCloseModal} />
+      <OrderDetails num={num} onClose={handleCloseModal} />
     </Modal>
   );
 
-  const bun = data.filter(item => item.type === "bun").at(1);
-  const others = data.filter(item => item.type !== "bun");
+
+
+  const calcTotal = (bunItem, othersArray) => {
+    if (othersArray === undefined || bunItem === undefined)
+      return 0;
+    else
+      return othersArray.reduce((sum, a) => sum + a.price, 0) + bunItem.price * 2;
+  }
 
   return (
     <section className={`${styles.container} pt-25`} >
@@ -72,7 +102,7 @@ const BurgerConstructor = ({ data }) => {
       </div>
 
       <div className={`${styles.price} pt-10 pb-1`}>
-        <p className='text text_type_digits-medium pr-10'>10000 <CurrencyIcon /></p>
+        <p className='text text_type_digits-medium pr-10'>{calcTotal(bun, others)} <CurrencyIcon /></p>
         {visible && modal}
         <Button type="primary" onClick={handleOpenModal}>
           Оформить заказ
@@ -82,7 +112,7 @@ const BurgerConstructor = ({ data }) => {
   );
 }
 
-BurgerConstructor.propTypes = {
+/*BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired
-}
+}*/
 export default BurgerConstructor;

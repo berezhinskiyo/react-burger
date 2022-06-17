@@ -1,5 +1,5 @@
 import styles from './ingredient-details.module.css'
-import { ingredientDetailsType } from '../../../utils/types'
+import { ingredientDetailsType } from '../../../services/types'
 
 const IngredientDetails = ({ data }) => {
 
