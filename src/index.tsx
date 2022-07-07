@@ -15,17 +15,15 @@ declare global {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
+
 const composeEnhancers =window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  /*typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;*/
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
-  devTools: process.env.NODE_ENV !== 'production',
+ //middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  //devTools: process.env.NODE_ENV !== 'production',
 
   enhancers: [enhancer],
 }) ;  
