@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import styles from './burger-ingredients.module.css'
 import Ingredient from './Ingredient/Ingredient'
-import { ingredientType } from '../../utils/types'
+import { DataContext } from '../../services/appContext';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = () => {
+
+  const { data } = useContext(DataContext);
 
   const bunsRef = React.createRef();
   const saucesRef = React.createRef()
@@ -81,7 +82,4 @@ const BurgerIngredients = ({ data }) => {
   );
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired
-}
 export default BurgerIngredients;
