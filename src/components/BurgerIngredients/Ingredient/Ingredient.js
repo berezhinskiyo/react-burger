@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const Ingredient = ({ data }) => {
 
-  const { counter } = useSelector(store => store.ingredients);
+  const counter = useSelector(store => store.burgerСonstructor.counter);
   const [visible, setVisible] = React.useState(false);
 
   const [{ isDrag }, drag] = useDrag({
@@ -37,10 +37,10 @@ const Ingredient = ({ data }) => {
     <>
       {!isDrag &&
         <div ref={drag} className={`${styles.ingredient} pl-4 pr-4`} >
-          <Counter count={counter.get(data._id)} />
+          <Counter count={counter[data._id]} />
           <img src={data.image} className={`${styles.ingredient__img} pl-4 pr-4`} alt={data.name} onClick={handleOpenModal} />
           {visible && modal}
-          <div className={`${styles.ingredient__price * counter.get(data._id)} pt-1 pb-1`}>
+          <div className={`${styles.ingredient__price * counter[data._id]} pt-1 pb-1`}>
             <p className='text text_type_digits-default pr-2'>{data.price}</p>
             <CurrencyIcon />
           </div>

@@ -1,8 +1,7 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState } from 'react';
 import styles from './burger-constructor.module.css'
 import OrderDetails from './OrderDetails/OrderDetails'
 import Modal from './../Modal/Modal'
-import { orderBurger } from '../../services/actions/index';
 import ConstructorIngredient from './ConstructorIngredient/ConstructorIngredient'
 
 
@@ -10,18 +9,20 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  ADD_INGREDIENT, CONSTRUCTOR_DELETE
-} from '../../services/actions';
+
+
+
+import { fetchOrder } from '../../services/store/orderSlice';
+import { addIngredient, removeIngredient } from '../../services/store/constructorSlice';
 
 const BurgerConstructor = () => {
-
-
   const dispatch = useDispatch();
 
-  const bun = useSelector(store => store.ingredients.constructorBun);
-  const others = useSelector(store => store.ingredients.constructorOthers);
-  const num = useSelector(store => store.ingredients.order);
+  const bun = useSelector(store => store.burgerСonstructor.constructorBun);
+  const others = useSelector(store => store.burgerСonstructor.constructorOthers);
+
+
+  const num = useSelector(store => store.order.num);
 
   const [{ isHover, itemData }, dropTarget] = useDrop({
     accept: "type",
@@ -30,10 +31,7 @@ const BurgerConstructor = () => {
       itemData: monitor.getItem()
     }),
     drop(ingredient) {
-      dispatch({
-        type: ADD_INGREDIENT,
-        ingredient: ingredient
-      });
+      dispatch(addIngredient(ingredient));
     },
   });
 
@@ -46,12 +44,9 @@ const BurgerConstructor = () => {
   }, [others, bun]);
 
 
-  /* const handleOpenModal = useCallback(() => {
-    dispatch(orderBurger(Ids));
-    setVisible(true);
-  }, [Ids])*/
   const handleOpenModal = () => {
-    dispatch(orderBurger(Ids));
+ 
+    dispatch(fetchOrder(Ids));
     setVisible(true);
   }
   const handleCloseModal = () => {
@@ -94,26 +89,24 @@ const BurgerConstructor = () => {
         }
       </div>
       <ul className={styles.container__ingredients} ref={dropTarget}>
-        {others.map((item, index) => {
-          return (
-            <ConstructorIngredient
-              ingredient={item}
-              key={index}
-              index={index}
-              text={`${item.name}`}
-              price={item.price}
-              thumbnail={item.image}
-              handleClose={() => {
-                dispatch(
-                  {
-                    type: CONSTRUCTOR_DELETE,
-                    index: index,
-                  })
-              }}
-            />
-          );
+        {
+          others.map((item, index) => {
+            return (
+              <ConstructorIngredient
+                ingredient={item}
+                key={index}
+                index={index}
+                text={`${item.name}`}
+                price={item.price}
+                thumbnail={item.image}
+                handleClose={() => {
+                  dispatch(removeIngredient(index));
+               
+                }}
+              />
+            );
 
-        })}
+          })}
       </ul>
       <div className={styles.container}>
         {bun &&

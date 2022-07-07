@@ -3,10 +3,8 @@ import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import styles from './constructor-ingredient.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import {
-    CONSTRUCTOR_MOVE
-} from '../../../services/actions';
 
+import { moveIngredient } from '../../../services/store/constructorSlice';
 const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index, handleClose }) => {
     const dispatch = useDispatch();
     const ref = useRef(null)
@@ -35,12 +33,11 @@ const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index
             if ((dragIndex < hoverIndex && hoverClientY < hoverMiddleY) || (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)) {
                 return
             }
-
-            dispatch({
-                type: CONSTRUCTOR_MOVE,
+            dispatch(moveIngredient({
                 dragIndex: dragIndex,
                 hoverIndex: hoverIndex
-            });
+            }));
+
 
             item.index = hoverIndex
         },
@@ -50,8 +47,7 @@ const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index
         item: () => {
 
             return {
-                index: index,
-                id: index
+                index: index
             }
         },
         collect: (monitor) => {
@@ -61,10 +57,10 @@ const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index
             }
         },
     })
-    const opacity = isDragging ? 0 : 1
+
     drag(drop(ref))
     return (
-        <li ref={ref} style={{ opacity: opacity }} data-handler-id={handlerId} className={`${styles.constructor__element}`} key={ingredient._id + index}>
+        <li ref={ref} data-handler-id={handlerId} className={`${styles.constructor__element}`} key={ingredient._id + index}>
             <span className="pr-4">
                 <DragIcon type="primary" />
             </span>

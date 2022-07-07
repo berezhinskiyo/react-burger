@@ -5,18 +5,18 @@ import Ingredient from './Ingredient/Ingredient'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../../services/actions/index';
+import { fetchIngredients } from '../../services/store/ingredientsSlice';
 import {bun, sauce, main} from '../../utils/data';
 
 const BurgerIngredients = () => {
 
   const dispatch = useDispatch();
 
-  const {buns, sauces, mains } = useSelector(store => store.ingredients);
+  const {buns, sauces, mains } = useSelector(store => store.burgerIngredients);
 
   useEffect(
     () => {
-      dispatch(getItems());
+      dispatch(fetchIngredients());
     },
     [dispatch]
   );

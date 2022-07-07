@@ -4,9 +4,11 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer } from './services/reducers/index';
+import { compose, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit'
+import { rootReducer } from './services/store/index';
 import thunk from 'redux-thunk';
+
 
 declare global {
   interface Window {
@@ -20,9 +22,15 @@ const composeEnhancers =window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-const store = createStore(rootReducer, enhancer);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  devTools: process.env.NODE_ENV !== 'production',
 
-const root = ReactDOM.render(
+  enhancers: [enhancer],
+}) ;  
+
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
