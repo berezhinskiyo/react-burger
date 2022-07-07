@@ -1,6 +1,3 @@
-export const order =
-{
-    "number": "034536",
-    "description": "Дождитесь готовности на орбитальной станции",
-    "status": "Ваш заказ начали готовить"
-};
+export const bun = 'bun';
+export const sauce = 'sauce';
+export const main = 'main';

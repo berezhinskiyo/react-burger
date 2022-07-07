@@ -1,22 +1,33 @@
-import React, { useContext } from 'react';
+
+import React, { useEffect} from 'react';
 import styles from './burger-ingredients.module.css'
 import Ingredient from './Ingredient/Ingredient'
-import { DataContext } from '../../services/appContext';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { getItems } from '../../services/actions/index';
+import {bun, sauce, main} from '../../utils/data';
 
 const BurgerIngredients = () => {
 
-  const { data } = useContext(DataContext);
+  const dispatch = useDispatch();
+
+  const {buns, sauces, mains } = useSelector(store => store.ingredients);
+
+  useEffect(
+    () => {
+      dispatch(getItems());
+    },
+    [dispatch]
+  );
 
   const bunsRef = React.createRef();
   const saucesRef = React.createRef()
   const mainRef = React.createRef()
 
-  const bun = 'bun';
-  const sauce = 'sauce';
-  const main = 'main';
+
   const [tab, setTab] = React.useState(bun)
+
 
 
   const switchTab = (val) => {
@@ -34,12 +45,6 @@ const BurgerIngredients = () => {
     setTab(val);
   };
 
-
-  const buns = data.filter(item => item.type === bun);
-
-  const sauces = data.filter(item => item.type === sauce);
-
-  const mains = data.filter(item => item.type === main);
 
   return (
     <section className={styles.container}>

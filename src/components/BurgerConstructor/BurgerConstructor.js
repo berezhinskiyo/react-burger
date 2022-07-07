@@ -1,42 +1,57 @@
-import React, { useContext, useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import styles from './burger-constructor.module.css'
 import OrderDetails from './OrderDetails/OrderDetails'
 import Modal from './../Modal/Modal'
-import { postOrders } from '../../services/api';
+import { orderBurger } from '../../services/actions/index';
+import ConstructorIngredient from './ConstructorIngredient/ConstructorIngredient'
 
-import { DataContext } from '../../services/appContext';
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useDrop } from "react-dnd";
+import { useSelector, useDispatch } from 'react-redux';
+
+import {
+  ADD_INGREDIENT, CONSTRUCTOR_DELETE
+} from '../../services/actions';
 
 const BurgerConstructor = () => {
 
-  const { data } = useContext(DataContext);
+
+  const dispatch = useDispatch();
+
+  const bun = useSelector(store => store.ingredients.constructorBun);
+  const others = useSelector(store => store.ingredients.constructorOthers);
+  const num = useSelector(store => store.ingredients.order);
+
+  const [{ isHover, itemData }, dropTarget] = useDrop({
+    accept: "type",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+      itemData: monitor.getItem()
+    }),
+    drop(ingredient) {
+      dispatch({
+        type: ADD_INGREDIENT,
+        ingredient: ingredient
+      });
+    },
+  });
+
+
   const [visible, setVisible] = useState(false);
 
+  const Ids = useMemo(() => {
+
+    return others && bun ? others.map(item => item._id) : []
+  }, [others, bun]);
 
 
-  const bun = data.filter(item => item.type === "bun").at(1);
-  const notBun = data.filter(item => item.type !== "bun");
-  const randomSet = useMemo(() => Array.from({ length: 5 }, () => Math.floor(Math.random() * notBun.length)), [data]);
-  const others = useMemo(() => notBun.filter((item, index) => randomSet.includes(index)), [data]);
-  const Ids = useMemo(() => others && bun ? others.map(item => item._id) : [], [data]);
-
-  const [num, setNum] = useState(0);
-
-  const postOrdersWrapper = useCallback(() => {
-    return postOrders(Ids)
-      .then((response) => {
-        console.log(response);
-        setNum(response.order.number)
-      }
-      )
-      .catch((err) => console.log(err))
-  }, [data])
-
+  /* const handleOpenModal = useCallback(() => {
+    dispatch(orderBurger(Ids));
+    setVisible(true);
+  }, [Ids])*/
   const handleOpenModal = () => {
-    if (num === 0) {
-      postOrdersWrapper();
-    }
+    dispatch(orderBurger(Ids));
     setVisible(true);
   }
   const handleCloseModal = () => {
@@ -52,18 +67,23 @@ const BurgerConstructor = () => {
 
 
   const calcTotal = (bunItem, othersArray) => {
-    if (othersArray === undefined || bunItem === undefined)
-      return 0;
-    else
-      return othersArray.reduce((sum, a) => sum + a.price, 0) + bunItem.price * 2;
+    let _result = 0;
+    if (othersArray && bunItem) {
+      _result = othersArray.reduce((sum, a) => sum + a.price, 0);
+    }
+    if (bunItem) {
+      _result += bunItem.price * 2
+    }
+    return _result;
   }
+
 
   return (
     <section className={`${styles.container} pt-25`} >
       <div className={styles.container}>
         {
           bun &&
-          (<div className='pl-10' key={bun._id}>
+          (<div className='pl-10' key={bun._id + 'top'}>
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -73,25 +93,31 @@ const BurgerConstructor = () => {
           </div>)
         }
       </div>
-      <ul className={styles.container__ingredients}>
-        {others.map(item => {
-          return (<li className={styles.constructor__element} key={item._id}>
-            <span className="pr-4">
-              <DragIcon type="primary" />
-            </span>
-            <div className={`${styles.item} pr-4`}>
-              <ConstructorElement key={item._id}
-                text={`${item.name}`}
-                price={item.price}
-                thumbnail={item.image} />
-            </div>
-          </li>);
+      <ul className={styles.container__ingredients} ref={dropTarget}>
+        {others.map((item, index) => {
+          return (
+            <ConstructorIngredient
+              ingredient={item}
+              key={index}
+              index={index}
+              text={`${item.name}`}
+              price={item.price}
+              thumbnail={item.image}
+              handleClose={() => {
+                dispatch(
+                  {
+                    type: CONSTRUCTOR_DELETE,
+                    index: index,
+                  })
+              }}
+            />
+          );
 
         })}
       </ul>
       <div className={styles.container}>
         {bun &&
-          (<div className='pl-10' key={bun._id}>
+          (<div className='pl-10' key={bun._id + 'bottom'}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -112,7 +138,5 @@ const BurgerConstructor = () => {
   );
 }
 
-/*BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired
-}*/
+
 export default BurgerConstructor;
