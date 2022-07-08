@@ -40,7 +40,7 @@ const BurgerConstructor = () => {
 
   const Ids = useMemo(() => {
 
-    return others && bun ? others.map(item => item.item._id) : []
+    return others && bun ? [...others.map(item => item.item._id), bun.item._id] : []
   }, [others, bun]);
 
 
@@ -100,7 +100,7 @@ const BurgerConstructor = () => {
                 price={item.item.price}
                 thumbnail={item.item.image}
                 handleClose={() => {
-                  dispatch(removeIngredient(index));
+                  dispatch(removeIngredient(item));
 
                 }}
               />

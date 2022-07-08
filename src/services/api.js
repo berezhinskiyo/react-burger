@@ -10,7 +10,7 @@ export const getIngredients = () => {
 }
 
 export const postOrders = (ingredients) => {
-
+    console.log(ingredients);
     return fetch(`${URL}/orders`, {
         headers: { "Content-Type": "application/json" },
         method: "POST",

@@ -21,17 +21,19 @@ const constructorSlice = createSlice({
 
 
             if (action.payload.type === bun) {
-                if (state.constructorBun) state.counter[state.constructorBun._id] = 0;
+                if (state.constructorBun) {
+                    state.counter[state.constructorBun.item._id] = 0;
+                }
                 state.counter[action.payload._id] = 2;
                 state.constructorBun = { item: action.payload, uuid: uuidv4() }
 
 
 
             } else {
-                if (!state.constructorOthers.find((item) => item._id === action.payload._id)) {
+                if (!state.constructorOthers.find((item) => item.item._id === action.payload._id)) {
                     state.counter[action.payload._id] = 1;
                 } else {
-                    state.counter[action.payload._id] = state.counter[action.payload._id] + 1
+                    state.counter[action.payload._id] += 1
                 }
                 state.constructorOthers = [...state.constructorOthers, { item: action.payload, uuid: uuidv4() }];
 
@@ -39,7 +41,9 @@ const constructorSlice = createSlice({
             }
         },
         removeIngredient(state, action) {
-            state.constructorOthers = state.constructorOthers.filter((item, index) => index !== action.payload);
+            state.constructorOthers = state.constructorOthers.filter((item) => item.uuid !== action.payload.uuid);
+            state.counter[action.payload.item._id] -= 1;
+
         },
         moveIngredient(state, action) {
             arrayMove(state.constructorOthers, action.payload.dragIndex, action.payload.hoverIndex);
