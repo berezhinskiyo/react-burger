@@ -3,9 +3,10 @@ import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import styles from './constructor-ingredient.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { constructorIngredientType } from '../../../services/types'
 
 import { moveIngredient } from '../../../services/store/constructorSlice';
-const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index, handleClose }) => {
+const ConstructorIngredient = ({ text, price, thumbnail, index, handleClose }) => {
     const dispatch = useDispatch();
     const ref = useRef(null)
     const [{ handlerId }, drop] = useDrop({
@@ -60,14 +61,12 @@ const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index
 
     drag(drop(ref))
     return (
-        <li ref={ref} data-handler-id={handlerId} className={`${styles.constructor__element}`} key={ingredient._id + index}>
+        <li ref={ref} data-handler-id={handlerId} className={`${styles.constructor__element}`}>
             <span className="pr-4">
                 <DragIcon type="primary" />
             </span>
             <div className={`${styles.item} pr-4`} >
                 <ConstructorElement
-                    type={type}
-                    key={index}
                     text={text}
                     price={price}
                     thumbnail={thumbnail}
@@ -77,4 +76,7 @@ const ConstructorIngredient = ({ ingredient, type, text, price, thumbnail, index
         </li>
     );
 }
+
+ConstructorIngredient.propTypes = constructorIngredientType;
+
 export default ConstructorIngredient;

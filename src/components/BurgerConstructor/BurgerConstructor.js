@@ -40,16 +40,17 @@ const BurgerConstructor = () => {
 
   const Ids = useMemo(() => {
 
-    return others && bun ? others.map(item => item._id) : []
+    return others && bun ? others.map(item => item.item._id) : []
   }, [others, bun]);
 
 
   const handleOpenModal = () => {
- 
+
     dispatch(fetchOrder(Ids));
     setVisible(true);
   }
   const handleCloseModal = () => {
+
     setVisible(false);
   }
 
@@ -64,10 +65,10 @@ const BurgerConstructor = () => {
   const calcTotal = (bunItem, othersArray) => {
     let _result = 0;
     if (othersArray && bunItem) {
-      _result = othersArray.reduce((sum, a) => sum + a.price, 0);
+      _result = othersArray.reduce((sum, a) => sum + a.item.price, 0);
     }
     if (bunItem) {
-      _result += bunItem.price * 2
+      _result += bunItem.item.price * 2
     }
     return _result;
   }
@@ -78,13 +79,13 @@ const BurgerConstructor = () => {
       <div className={styles.container}>
         {
           bun &&
-          (<div className='pl-10' key={bun._id + 'top'}>
+          (<div className='pl-10'>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image} />
+              text={`${bun.item.name} (верх)`}
+              price={bun.item.price}
+              thumbnail={bun.item.image} />
           </div>)
         }
       </div>
@@ -93,15 +94,14 @@ const BurgerConstructor = () => {
           others.map((item, index) => {
             return (
               <ConstructorIngredient
-                ingredient={item}
-                key={index}
+                key={item.uuid}
                 index={index}
-                text={`${item.name}`}
-                price={item.price}
-                thumbnail={item.image}
+                text={item.item.name}
+                price={item.item.price}
+                thumbnail={item.item.image}
                 handleClose={() => {
                   dispatch(removeIngredient(index));
-               
+
                 }}
               />
             );
@@ -110,20 +110,20 @@ const BurgerConstructor = () => {
       </ul>
       <div className={styles.container}>
         {bun &&
-          (<div className='pl-10' key={bun._id + 'bottom'}>
+          (<div className='pl-10'>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image} />
+              text={`${bun.item.name} (низ)`}
+              price={bun.item.price}
+              thumbnail={bun.item.image} />
           </div>)}
       </div>
 
       <div className={`${styles.price} pt-10 pb-1`}>
         <p className='text text_type_digits-medium pr-10'>{calcTotal(bun, others)} <CurrencyIcon /></p>
         {visible && modal}
-        <Button type="primary" onClick={handleOpenModal}>
+        <Button type="primary" onClick={handleOpenModal} disabled={!bun}>
           Оформить заказ
         </Button>
       </div>

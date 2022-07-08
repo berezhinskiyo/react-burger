@@ -1,6 +1,8 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { postOrders } from '../api'
+import { resetIngredients } from './constructorSlice';
+
 
 
 export const fetchOrder = createAsyncThunk(
@@ -13,6 +15,7 @@ export const fetchOrder = createAsyncThunk(
                 throw new Error('Can\'t create order. Server error.');
             }
             dispatch(createOrder(response));
+            dispatch(resetIngredients());
 
         } catch (error) {
             return rejectWithValue(error.message);
@@ -39,6 +42,8 @@ const orderSlice = createSlice({
         },
         [fetchOrder.fulfilled]: (state, action) => {
             state.status = 'resolved';
+
+
         }
         ,
         [fetchOrder.rejected]: (state, action) => {

@@ -13,6 +13,7 @@ export const fetchIngredients = createAsyncThunk(
             if (!response.success) {
                 throw new Error('Can\'t get burger ingredients. Server error.');
             }
+        
             dispatch(loadIngredients(response));
 
         } catch (error) {
