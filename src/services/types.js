@@ -9,7 +9,7 @@ export const ingredientType = PropTypes.shape({
 });
 
 export const ingredientDetailsType = PropTypes.shape({
-   
+
     name: PropTypes.string.isRequired,
     image: PropTypes.node.isRequired,
     calories: PropTypes.number.isRequired,
@@ -23,3 +23,12 @@ export const orderType = PropTypes.shape({
     status: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired
 });
+
+export const constructorIngredientType = {
+
+    text: PropTypes.string.isRequired,
+    thumbnail: PropTypes.node.isRequired,
+    price: PropTypes.number.isRequired,
+    index: PropTypes.number.isRequired,
+    handleClose: PropTypes.func.isRequired
+};
