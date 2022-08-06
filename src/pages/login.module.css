@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  
+  justify-content:center;
+  margin: 180px auto 0 auto;
+}
+
+
+.text {
+  margin: auto;
+}
+
+.link {
+  color: #4C4CFF;
+}
+.header {
+  color: #F2F2F3;
+  margin: auto;
+}
+.button{
+  margin: auto;
+}
+.field{
+  margin: auto;
+}
+.field div:first-child {
+  width: 480px;
+}

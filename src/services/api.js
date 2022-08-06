@@ -1,6 +1,7 @@
 const URL = 'https://norma.nomoreparties.space/api';
 
 
+
 const checkResponse = (res) => res.ok ? res.json() : Promise.reject(res);
 
 
@@ -15,6 +16,17 @@ export const postOrders = (ingredients) => {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({ ingredients: ingredients })
+    })
+        .then(checkResponse);
+
+}
+
+export const passwordReset = (email) => {
+
+    return fetch(`${URL}/password-reset`, {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ email: email })
     })
         .then(checkResponse);
 

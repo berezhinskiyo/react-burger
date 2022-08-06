@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ingredient.module.css'
-import Modal from './../../Modal/Modal'
-import IngredientDetails from './../IngredientDetails/IngredientDetails'
+import Modal from '../../Modal'
+import IngredientDetails from '../IngredientDetails'
 import { ingredientType } from '../../../services/types'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrag } from "react-dnd";

@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import styles from './burger-ingredients.module.css'
-import Ingredient from './Ingredient/Ingredient'
+import Ingredient from './Ingredient'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { useSelector, useDispatch } from 'react-redux';
