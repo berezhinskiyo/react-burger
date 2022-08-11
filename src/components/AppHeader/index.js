@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useMatch } from "react-router-dom";
 import styles from './app-header.module.css'
 import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -7,16 +8,20 @@ import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-dev
 
 const AppHeader = () => {
 
+  const isRoot = useMatch("/");
+  const isProfile = useMatch("/profile");
+
   return (
     <header className={styles.header}>
       <div className={`${styles.header__left_block} pb-4 pt-4`}>
 
-        <div className={`${styles.block} pl-5 pr-5`}>
+        <Link to="/" className={`${styles.block} ${isRoot && styles.active} text text_type_main-default pl-5 pr-5`}>
           <BurgerIcon />
-          <p className={`text text_type_main-default pl-2`}>
+          <p className={`text text_type_main-default ${!isRoot && "text_color_inactive"} pl-2 `}>
             Конструктор
           </p>
-        </div>
+        </Link>
+
         <div className={styles.block}>
           <ListIcon type='secondary' />
           <p className={`text text_type_main-default text_color_inactive pl-2`}>
@@ -26,12 +31,12 @@ const AppHeader = () => {
       </div>
 
       <Logo />
-      <div className={`${styles.block} pl-5 pr-5 pb-4 pt-4`}>
+      <Link to="/profile" className={`${styles.block} ${isProfile && styles.active}  text text_type_main-default ыpl-5 pr-5 pb-4 pt-4`}>
         <ProfileIcon type="primary" />
-        <p className={`text text_type_main-default text_color_inactive pl-2`}>
+        <p className={`text text_type_main-default ${!isProfile && "text_color_inactive"}  pl-2`}>
           Личный кабинет
         </p>
-      </div>
+      </Link>
 
 
     </header>

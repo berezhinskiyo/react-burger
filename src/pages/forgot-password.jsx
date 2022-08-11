@@ -1,21 +1,18 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {Link,Navigate} from 'react-router-dom';
 
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
 import AppHeader from '../components/AppHeader';
 import { Button,Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch ,useSelector} from 'react-redux';
-import {fetchResetPassword}  from '../services/store/loginSlice';
+import { useAuth } from '../services/auth';
 
 export default function ForgotPasswordPage() {  
 
-  const dispatch = useDispatch();
+  let auth = useAuth();
 
   const [email, setEmail] = useState('');
-
-
-  const isEmailSent = useSelector(store => store.login.success);
+  const [isOk, setIsOk] = useState(false);
 
   const onChange = e => {
     setEmail(e.target.value);
@@ -24,14 +21,14 @@ export default function ForgotPasswordPage() {
   let reset = useCallback(
     e => {
       e.preventDefault();
-      dispatch(fetchResetPassword(email));
+      setIsOk(auth.resetPassword(email));
 
     },
-    [email,dispatch]
+    [email,auth]
   );
 
 
-  if (isEmailSent) {
+  if (isOk) {
     return (
       <Navigate
         to='/reset-password'

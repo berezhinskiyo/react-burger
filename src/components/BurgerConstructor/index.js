@@ -1,22 +1,22 @@
 import { useMemo, useState } from 'react';
 import styles from './burger-constructor.module.css'
-import OrderDetails from './OrderDetails'
-import Modal from '../Modal'
-import ConstructorIngredient from './ConstructorIngredient'
 
+import ConstructorIngredient from './ConstructorIngredient'
 
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 
-
-
-
 import { fetchOrder } from '../../services/store/orderSlice';
 import { addIngredient, removeIngredient } from '../../services/store/constructorSlice';
 
+import { Link, useLocation } from 'react-router-dom';
+
+
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const state = location.state;
 
   const bun = useSelector(store => store.burgerСonstructor.constructorBun);
   const others = useSelector(store => store.burgerСonstructor.constructorOthers);
@@ -43,7 +43,7 @@ const BurgerConstructor = () => {
     return others && bun ? [...others.map(item => item.item._id), bun.item._id] : []
   }, [others, bun]);
 
-
+/*
   const handleOpenModal = () => {
 
     dispatch(fetchOrder(Ids));
@@ -55,11 +55,11 @@ const BurgerConstructor = () => {
   }
 
   const modal = (
-    <Modal title="" onClose={handleCloseModal}>
-      <OrderDetails num={num} onClose={handleCloseModal} />
+    <Modal title="" >
+      <OrderDetails />
     </Modal>
   );
-
+*/
 
 
   const calcTotal = (bunItem, othersArray) => {
@@ -122,10 +122,15 @@ const BurgerConstructor = () => {
 
       <div className={`${styles.price} pt-10 pb-1`}>
         <p className='text text_type_digits-medium pr-10'>{calcTotal(bun, others)} <CurrencyIcon /></p>
-        {visible && modal}
-        <Button type="primary" onClick={handleOpenModal} disabled={!bun}>
-          Оформить заказ
-        </Button>
+       
+        <Link
+          to={!bun ? '#' : `/order`}
+          state={{ ...state, background: location }}>
+          <Button type="primary" disabled={!bun}>
+            Оформить заказ
+          </Button>
+        </Link>
+
       </div>
     </section >
   );
