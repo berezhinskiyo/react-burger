@@ -9,7 +9,6 @@ import { Link, useLocation } from 'react-router-dom';
 const Ingredient = ({ data }) => {
 
   const counter = useSelector(store => store.burgerСonstructor.counter);
-  const [visible, setVisible] = React.useState(false);
 
   const [{ isDrag }, drag] = useDrag({
     type: "type",

@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './profile.module.css';
-import AppHeader from '../components/AppHeader';
 import { PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect ,useState} from 'react';
 import { useAuth } from '../services/auth';
@@ -19,7 +18,7 @@ export default function ProfilePage() {
   };
   return (
     <div className={baseStyles.page}>
-         <AppHeader />
+
       <div className={styles.main}>
        <nav className={styles.column}>
         <ul className={styles.ul}> 
@@ -47,7 +46,7 @@ export default function ProfilePage() {
         <Input  name="email" placeholder={'Логин'} value={form.email} onChange={onChange}></Input>
         </span>
         <span className={`${styles.field} pt-6`}>
-        <PasswordInput className={`${styles.field}`}  placeholder="Password" name="password" value={form.password} onChange={onChange}></PasswordInput>
+        <PasswordInput className={`${styles.field}`}  placeholder="Password" name="password" value="" onChange={onChange}></PasswordInput>
        </span>
        </div>
        </div>

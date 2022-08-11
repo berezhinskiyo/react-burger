@@ -1,13 +1,12 @@
-import { useMemo, useState } from 'react';
+
 import styles from './burger-constructor.module.css'
 
-import ConstructorIngredient from './ConstructorIngredient'
+import ConstructorIngredient from './constructor-ingredient'
 
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchOrder } from '../../services/store/orderSlice';
 import { addIngredient, removeIngredient } from '../../services/store/constructorSlice';
 
 import { Link, useLocation } from 'react-router-dom';
@@ -34,32 +33,6 @@ const BurgerConstructor = () => {
       dispatch(addIngredient(ingredient));
     },
   });
-
-
-  const [visible, setVisible] = useState(false);
-
-  const Ids = useMemo(() => {
-
-    return others && bun ? [...others.map(item => item.item._id), bun.item._id] : []
-  }, [others, bun]);
-
-/*
-  const handleOpenModal = () => {
-
-    dispatch(fetchOrder(Ids));
-    setVisible(true);
-  }
-  const handleCloseModal = () => {
-
-    setVisible(false);
-  }
-
-  const modal = (
-    <Modal title="" >
-      <OrderDetails />
-    </Modal>
-  );
-*/
 
 
   const calcTotal = (bunItem, othersArray) => {
@@ -122,7 +95,7 @@ const BurgerConstructor = () => {
 
       <div className={`${styles.price} pt-10 pb-1`}>
         <p className='text text_type_digits-medium pr-10'>{calcTotal(bun, others)} <CurrencyIcon /></p>
-       
+
         <Link
           to={!bun ? '#' : `/order`}
           state={{ ...state, background: location }}>

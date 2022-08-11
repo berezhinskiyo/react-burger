@@ -3,22 +3,20 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css'
-import ModalOverlay from '../ModalOverlay'
+import ModalOverlay from '../modal-overlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useNavigate } from 'react-router-dom';
+
 
 
 
 const modalRoot = document.getElementById("react-modals");
-const Modal = ({ title, children }) => {
-    const navigate = useNavigate();
+const Modal = ({ title, onCloseModal, children }) => {
+
     const handleEscKeydown = (e) => {
-        e.key === "Escape" && closeModal();
+        e.key === "Escape" && onCloseModal();
     };
 
-    const closeModal = () => {
-        navigate(-1);
-    };
+
 
     React.useEffect(() => {
         document.addEventListener('keydown', handleEscKeydown);
@@ -34,13 +32,13 @@ const Modal = ({ title, children }) => {
                 <div className={styles.model}>
                     <div className={`${styles.model__header_box} pt-10 pl-10 pr-10`}>
                         <h2 className='text text_type_main-medium'>{title}</h2>
-                        <CloseIcon type="primary" onClick={closeModal} />
+                        <CloseIcon type="primary" onClick={onCloseModal} />
 
                     </div>
                     {children}
                 </div>
 
-                < ModalOverlay onClick={closeModal} />
+                < ModalOverlay onClick={onCloseModal} />
             </>
 
         ),

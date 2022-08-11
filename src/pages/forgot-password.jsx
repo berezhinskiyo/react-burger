@@ -1,15 +1,17 @@
-import { useCallback, useState } from 'react';
-import {Link,Navigate} from 'react-router-dom';
+import {useCallback, useState } from 'react';
+import {Link, Navigate, useLocation} from 'react-router-dom';
 
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
-import AppHeader from '../components/AppHeader';
 import { Button,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../services/auth';
 
 export default function ForgotPasswordPage() {  
 
   let auth = useAuth();
+  const location = useLocation();
+
+  const state = location.state;
 
   const [email, setEmail] = useState('');
   const [isOk, setIsOk] = useState(false);
@@ -32,14 +34,15 @@ export default function ForgotPasswordPage() {
     return (
       <Navigate
         to='/reset-password'
+        state={{ ...state, from: location }} 
       />
     );
   }
 
   return (
     <div className={baseStyles.page}>
-         <AppHeader />
-      <form className={styles.main}>
+
+      <form className={styles.main} onSubmit = {reset}>
       
           <p className={`text text_type_main-medium ${styles.header} `}>Восстановление пароля</p>
           <span className={`${styles.field} pt-6`}>
@@ -47,7 +50,7 @@ export default function ForgotPasswordPage() {
         </span>
         <span className={`${styles.field} pt-6`}>
        
-          <Button   onClick={reset} primary={true}>
+          <Button    primary={true}>
           Восстановить
           </Button>
           </span>

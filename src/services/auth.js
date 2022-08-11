@@ -54,36 +54,60 @@ export function useProvideAuth() {
 
 
   const signIn = async form => {
-    const data = await loginRequest(form)
-      .then(res => _login(res))
+    try {
+      const data = await loginRequest(form)
+        .then(res => _login(res))
 
-    if (data.success) {
-      setUser(data.user);
+      if (data.success) {
+        setUser(data.user);
+      }
+    } catch (e) {
+      console.log(e);
+
     }
   };
 
 
   const signUp = async ({ email, password, name }) => {
-    const data = await registerRequest(email, password, name)
-      .then(res => _login(res))
-    if (data.success) {
-      setUser(data.user);
+    try {
+      const data = await registerRequest(email, password, name)
+        .then(res => _login(res))
+      if (data.success) {
+        setUser(data.user);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const forgotPassword = async ({ email }) => {
-    const data = await passwordResetRequest(email)
-    return data.success;
+    try {
+      const data = await passwordResetRequest(email)
+      return data.success;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   };
   const resetPassword = async ({ password, code }) => {
-    const data = await resetRequest(password, code)
-    return data.success;
+    try {
+      const data = await resetRequest(password, code)
+      return data.success;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   };
 
 
   const signOut = async () => {
-    await logoutRequest(getCookie('refreshToken'));
-    setUser(null);
+    try {
+      await logoutRequest(getCookie('refreshToken'));
+      setUser(null);
+    } catch (e) {
+      console.log(e);
+
+    }
   };
 
 

@@ -1,8 +1,7 @@
 
 import styles from './home.module.css'
-import AppHeader from '../components/AppHeader';
-import BurgerConstructor from '../components/BurgerConstructor';
-import BurgerIngredients from '../components/BurgerIngredients';
+import BurgerConstructor from '../components/burger-constructor';
+import BurgerIngredients from '../components/burger-ingredients';
 
 
 import { DndProvider } from "react-dnd";
@@ -13,7 +12,7 @@ function HomePage() {
   return (
     <div className={styles.page}>
 
-      <AppHeader />
+
       <DndProvider backend={HTML5Backend}>
         {
           <main className={styles.main}>

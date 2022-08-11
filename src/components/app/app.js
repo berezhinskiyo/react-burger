@@ -1,29 +1,41 @@
-import { Router, Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from './components/protected-route';
-import NotFound404 from './pages/not-found';
-import HomePage from './pages/home';
-import LoginPage from './pages/login';
-import RegisterPage from './pages/register';
-import ForgotPasswordPage from './pages/forgot-password';
-import ResetPasswordPage from './pages/reset-password';
-import ProfilePage from './pages/profile';
-import { ProvideAuth } from './services/auth';
-import Modal from './components/Modal'
-import IngredientDetails from './components/BurgerIngredients/IngredientDetails'
-import OrderDetails from './components/BurgerConstructor/OrderDetails'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { ProtectedRoute } from '../protected-route';
+import NotFound404 from '../../pages/not-found';
+import HomePage from '../../pages/home';
+import LoginPage from '../../pages/login';
+import RegisterPage from '../../pages/register';
+import ForgotPasswordPage from '../../pages/forgot-password';
+import ResetPasswordPage from '../../pages/reset-password';
+import ProfilePage from '../../pages/profile';
+import { ProvideAuth } from '../../services/auth';
+import Modal from '../modal'
+import IngredientDetails from '../burger-ingredients/ingredient-details'
+import OrderDetails from '../burger-constructor/order-details'
 
-import { useLocation } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchIngredients } from '../../services/store/ingredientsSlice';
+import AppHeader from '../app-header';
 
 function App() {
 
+  const dispatch = useDispatch();
   const location = useLocation();
   const state = location.state;
   const background = state?.background;
-
+  useEffect(
+    () => {
+      dispatch(fetchIngredients());
+    },
+    []
+  );
+  const navigate = useNavigate();
+  const closeModal = () => {
+    navigate(-1);
+  };
   return (
     <ProvideAuth>
-
+      <AppHeader />
       <Routes location={background || location}>
         <Route path="/" exact={true} element={<HomePage />} />
         <Route path="/login" exact={true} element={<ProtectedRoute onlyUnAuth={true} ><LoginPage logout={false} /></ProtectedRoute>} />
@@ -41,13 +53,13 @@ function App() {
       {background && (
         <Routes>
           <Route path="/ingredient/:id" exact={true} element={
-            <Modal title="Детали заказа" >
+            <Modal title="Детали заказа" onCloseModal={closeModal}  >
               <IngredientDetails />
             </Modal>
           } />
           <Route path="/order" exact={true} element={
             <ProtectedRoute>
-              <Modal title="" >
+              <Modal title="" onCloseModal={closeModal} >
                 <OrderDetails />
               </Modal>
             </ProtectedRoute>} />

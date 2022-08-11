@@ -1,18 +1,18 @@
 import { useCallback, useState ,useEffect} from 'react';
-import {Link,Navigate} from 'react-router-dom';
+import {Link,Navigate,useLocation} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
-import AppHeader from '../components/AppHeader';
 import { Button, PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../services/auth';
 
 export default function LoginPage({logout}) {  
   let auth = useAuth();
+  const location = useLocation();
 
  
   const [form, setValue] = useState({ email: '', password: ''});
 
-  let login = useCallback(
+  const login = useCallback(
     e => {
       e.preventDefault();
       auth.signIn(form);
@@ -32,14 +32,14 @@ export default function LoginPage({logout}) {
   if (auth.user && !logout) {
     return (
       <Navigate
-        to='/'
+        to={location?.state?.from || '/'}
       />
     );
   }
   return (
     <div className={baseStyles.page}>
-         <AppHeader />
-      <form className={styles.main}>
+         
+      <form className={styles.main} onSubmit={login}>
       
           <p className={`text text_type_main-medium ${styles.header} `}>Вход</p>
           <span className={`${styles.field} pt-6`}>
@@ -49,7 +49,7 @@ export default function LoginPage({logout}) {
         <PasswordInput className={`${styles.field}`}  placeholder="Password" name="password" value={form.password} onChange={onChange}></PasswordInput>
         </span>
           <span className={`${styles.button} pt-6`}>
-          <Button   onClick={login} primary={true}>
+          <Button   primary={true}>
             Войти
           </Button>
           </span>

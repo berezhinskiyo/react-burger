@@ -29,8 +29,9 @@ const AppHeader = () => {
           </p>
         </div>
       </div>
-
-      <Logo />
+      <Link to="/" >
+        <Logo />
+      </Link>
       <Link to="/profile" className={`${styles.block} ${isProfile && styles.active}  text text_type_main-default ыpl-5 pr-5 pb-4 pt-4`}>
         <ProfileIcon type="primary" />
         <p className={`text text_type_main-default ${!isProfile && "text_color_inactive"}  pl-2`}>

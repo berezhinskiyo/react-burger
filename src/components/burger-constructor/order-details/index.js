@@ -3,7 +3,7 @@ import styles from './order-details.module.css'
 import done from '../../../image/done.svg'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrder } from '../../../services/store/orderSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
 const OrderDetails = () => {

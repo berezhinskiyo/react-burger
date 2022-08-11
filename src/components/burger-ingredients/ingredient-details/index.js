@@ -1,25 +1,18 @@
 import styles from './ingredient-details.module.css'
 
-import { fetchIngredients } from '../../../services/store/ingredientsSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 
 const IngredientDetails = () => {
 
-    const dispatch = useDispatch();
+
     const src = useSelector(store => store.burgerIngredients.data);
     const { id } = useParams();
     const [data, setData] = useState({});
 
 
-    useEffect(
-        () => {
-            dispatch(fetchIngredients());
-        },
-        []
-    );
     useEffect(
         () => {
             if (src) setData(src.find(item => item._id === id))

@@ -1,20 +1,22 @@
 import { useCallback, useState} from 'react';
-import {Link, Navigate} from 'react-router-dom';
+import {Link, Navigate,useLocation,useNavigate} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
-import AppHeader from '../components/AppHeader';
 import { Button, PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../services/auth';
 
 export default function ResetPasswordPage() {  
 
-  let auth = useAuth();
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
 
   const [form, setValue] = useState({ password: '' ,code:''});
   const [isOk, setIsOk] = useState(false);
 
 
-  let reset = useCallback(
+  const reset = useCallback(
     e => {
       e.preventDefault();
       setIsOk(auth.reset(form));
@@ -25,7 +27,7 @@ export default function ResetPasswordPage() {
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
-
+  
   if (isOk) {
     return (
       <Navigate
@@ -33,10 +35,14 @@ export default function ResetPasswordPage() {
       />
     );
   }
+
+
   return (
+    <>
+    {location.state?.from?.pathname === '/forgot-password' && (
     <div className={baseStyles.page}>
-         <AppHeader />
-      <form className={styles.main}>
+
+      <form className={styles.main} onSubmit={reset}>
       
         <p className={`text text_type_main-medium ${styles.header} `}>Восстановление пароля</p>
         <span className={`${styles.field} pt-6`}>
@@ -48,7 +54,7 @@ export default function ResetPasswordPage() {
         </span>
         <span className={`${styles.field} pt-6`}>
        
-        <Button   onClick={reset} primary={true}>
+        <Button   primary={true}>
         Сохранить
         </Button>
         </span>
@@ -58,6 +64,7 @@ export default function ResetPasswordPage() {
         </form>
 
       </div>
-
+    )}
+      </>
   );
 }
