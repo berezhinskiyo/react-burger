@@ -38,11 +38,11 @@ function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" exact={true} element={<HomePage />} />
-        <Route path="/login" exact={true} element={<ProtectedRoute onlyUnAuth={true} ><LoginPage logout={false} /></ProtectedRoute>} />
+        <Route path="/login" exact={true} element={<ProtectedRoute anonymous={true} ><LoginPage logout={false} /></ProtectedRoute>} />
         <Route path="/logout" exact={true} element={<LoginPage logout={true} />} />
-        <Route path="/register" exact={true} element={<ProtectedRoute onlyUnAuth={true} ><RegisterPage /></ProtectedRoute>} />
-        <Route path="/forgot-password" exact={true} element={<ProtectedRoute onlyUnAuth={true} ><ForgotPasswordPage /></ProtectedRoute>} />
-        <Route path="/reset-password" exact={true} element={<ProtectedRoute onlyUnAuth={true} ><ResetPasswordPage /></ProtectedRoute>} />
+        <Route path="/register" exact={true} element={<ProtectedRoute anonymous={true} ><RegisterPage /></ProtectedRoute>} />
+        <Route path="/forgot-password" exact={true} element={<ProtectedRoute anonymous={true} ><ForgotPasswordPage /></ProtectedRoute>} />
+        <Route path="/reset-password" exact={true} element={<ProtectedRoute anonymous={true} ><ResetPasswordPage /></ProtectedRoute>} />
 
         <Route path="/profile" exact={true} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/order" exact={true} element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />

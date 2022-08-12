@@ -35,11 +35,18 @@ export default function ResetPasswordPage() {
       />
     );
   }
+  if (!location.state || !location.state?.from?.pathname === '/forgot-password' ) {
+    return (
+      <Navigate
+      to='/forgot-password'
+    />
+   
+    );
+  }
 
 
   return (
-    <>
-    {location.state?.from?.pathname === '/forgot-password' && (
+
     <div className={baseStyles.page}>
 
       <form className={styles.main} onSubmit={reset}>
@@ -64,7 +71,6 @@ export default function ResetPasswordPage() {
         </form>
 
       </div>
-    )}
-      </>
+
   );
 }
