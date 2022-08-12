@@ -1,17 +1,17 @@
-import { useCallback, useState ,useEffect} from 'react';
+import { useCallback ,useEffect} from 'react';
 import {Link,Navigate,useLocation} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
 import { Button, PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../services/auth';
+import useForm from '../hooks/useForm';
 
 export default function LoginPage({logout}) {  
   let auth = useAuth();
   const location = useLocation();
 
+  const [form, onChange] = useForm({ email: '', password: ''});
  
-  const [form, setValue] = useState({ email: '', password: ''});
-
   const login = useCallback(
     e => {
       e.preventDefault();
@@ -20,9 +20,7 @@ export default function LoginPage({logout}) {
     [form,auth]
   );
   
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+
   useEffect(() => {
    if(logout)
     auth.signOut();

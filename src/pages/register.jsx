@@ -1,14 +1,16 @@
-import { useCallback, useState} from 'react';
+import { useCallback} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
 import { Button, PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../services/auth';
+import useForm from '../hooks/useForm';
 
 export default function RegisterPage() {  
 
   let auth = useAuth();
-  const [form, setValue] = useState({ email: '', password: '' ,name:''});
+ 
+  const [form, onChange] = useForm({ email: '', password: '' ,name:''});
 
   let send = useCallback(
     e => {
@@ -18,9 +20,6 @@ export default function RegisterPage() {
     [form,auth]
   );
 
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
 
   
   if (auth.user) {

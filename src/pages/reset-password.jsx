@@ -1,5 +1,5 @@
 import { useCallback, useState} from 'react';
-import {Link, Navigate,useLocation,useNavigate} from 'react-router-dom';
+import {Link, Navigate,useLocation} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
 import { Button, PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -8,7 +8,7 @@ import { useAuth } from '../services/auth';
 export default function ResetPasswordPage() {  
 
   const auth = useAuth();
-  const navigate = useNavigate();
+
   const location = useLocation();
 
 
