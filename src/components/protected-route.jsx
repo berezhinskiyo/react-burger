@@ -1,6 +1,6 @@
 import { useAuth } from '../services/auth';
 import { Navigate ,useLocation} from 'react-router-dom';
-import { useEffect,useState } from 'react';
+import { useEffect } from 'react';
 
 
 export function ProtectedRoute({  children, anonymous = false })  {

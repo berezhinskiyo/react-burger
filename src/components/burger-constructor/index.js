@@ -10,9 +10,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addIngredient, removeIngredient } from '../../services/store/constructorSlice';
 
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../services/auth';
 
+import { useEffect } from 'react';
 
 const BurgerConstructor = () => {
+
+  const auth = useAuth();
+  const init = async () => {
+    await auth.getUser();
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   const dispatch = useDispatch();
   const location = useLocation();
   const state = location.state;
@@ -96,13 +108,20 @@ const BurgerConstructor = () => {
       <div className={`${styles.price} pt-10 pb-1`}>
         <p className='text text_type_digits-medium pr-10'>{calcTotal(bun, others)} <CurrencyIcon /></p>
 
-        <Link
+        {auth.user && (<Link
           to={!bun ? '#' : `/order`}
           state={{ ...state, background: location }}>
           <Button type="primary" disabled={!bun}>
             Оформить заказ
           </Button>
-        </Link>
+        </Link>)}
+        {!auth.user && (<Link
+          to={`/login`}
+          state={{ ...state, from: location }}>
+          <Button type="primary" disabled={!bun}>
+            Оформить заказ
+          </Button>
+        </Link>)}
 
       </div>
     </section >
