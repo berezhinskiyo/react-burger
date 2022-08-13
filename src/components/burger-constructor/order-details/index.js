@@ -1,11 +1,23 @@
-import PropTypes from 'prop-types';
+
 import styles from './order-details.module.css'
 import done from '../../../image/done.svg'
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchOrder } from '../../../services/store/orderSlice';
+import { useEffect } from 'react';
 
-const OrderDetails = ({ num }) => {
+
+const OrderDetails = () => {
+    const dispatch = useDispatch();
+    const num = useSelector(store => store.order.num);
+    const counter = useSelector(store => store.burgerСonstructor.counter);
 
 
- 
+
+    useEffect(() => {
+        dispatch(fetchOrder(Object.keys(counter)));
+    }, []);
+
+
 
     return (
         <div className={styles.details}>
@@ -22,9 +34,6 @@ const OrderDetails = ({ num }) => {
 
 }
 
-OrderDetails.propTypes = {
-    num:  PropTypes.number.isRequired
-}
 
 
 export default OrderDetails;

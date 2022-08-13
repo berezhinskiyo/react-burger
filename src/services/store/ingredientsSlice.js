@@ -28,12 +28,13 @@ const ingredientsSlice = createSlice({
         buns: [],
         sauces: [],
         mains: [],
+        data:[],
         status: null,
         error: null,
     },
     reducers: {
         loadIngredients(state, action) {
-
+            state.data = action.payload.data;
             state.buns = action.payload.data.filter(item => item.type === bun);
             state.sauces = action.payload.data.filter(item => item.type === sauce);
             state.mains = action.payload.data.filter(item => item.type === main);

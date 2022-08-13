@@ -1,22 +1,33 @@
-import { useMemo, useState } from 'react';
-import styles from './burger-constructor.module.css'
-import OrderDetails from './OrderDetails/OrderDetails'
-import Modal from './../Modal/Modal'
-import ConstructorIngredient from './ConstructorIngredient/ConstructorIngredient'
 
+import styles from './burger-constructor.module.css'
+
+import ConstructorIngredient from './constructor-ingredient'
 
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 
-
-
-
-import { fetchOrder } from '../../services/store/orderSlice';
 import { addIngredient, removeIngredient } from '../../services/store/constructorSlice';
 
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../services/auth';
+
+import { useEffect } from 'react';
+
 const BurgerConstructor = () => {
+
+  const auth = useAuth();
+  const init = async () => {
+    await auth.getUser();
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   const dispatch = useDispatch();
+  const location = useLocation();
+  const state = location.state;
 
   const bun = useSelector(store => store.burgerСonstructor.constructorBun);
   const others = useSelector(store => store.burgerСonstructor.constructorOthers);
@@ -34,32 +45,6 @@ const BurgerConstructor = () => {
       dispatch(addIngredient(ingredient));
     },
   });
-
-
-  const [visible, setVisible] = useState(false);
-
-  const Ids = useMemo(() => {
-
-    return others && bun ? [...others.map(item => item.item._id), bun.item._id] : []
-  }, [others, bun]);
-
-
-  const handleOpenModal = () => {
-
-    dispatch(fetchOrder(Ids));
-    setVisible(true);
-  }
-  const handleCloseModal = () => {
-
-    setVisible(false);
-  }
-
-  const modal = (
-    <Modal title="" onClose={handleCloseModal}>
-      <OrderDetails num={num} onClose={handleCloseModal} />
-    </Modal>
-  );
-
 
 
   const calcTotal = (bunItem, othersArray) => {
@@ -122,10 +107,22 @@ const BurgerConstructor = () => {
 
       <div className={`${styles.price} pt-10 pb-1`}>
         <p className='text text_type_digits-medium pr-10'>{calcTotal(bun, others)} <CurrencyIcon /></p>
-        {visible && modal}
-        <Button type="primary" onClick={handleOpenModal} disabled={!bun}>
-          Оформить заказ
-        </Button>
+
+        {auth.user && (<Link
+          to={!bun ? '#' : `/order`}
+          state={{ ...state, background: location }}>
+          <Button type="primary" disabled={!bun}>
+            Оформить заказ
+          </Button>
+        </Link>)}
+        {!auth.user && (<Link
+          to={`/login`}
+          state={{ ...state, from: location }}>
+          <Button type="primary" disabled={!bun}>
+            Оформить заказ
+          </Button>
+        </Link>)}
+
       </div>
     </section >
   );

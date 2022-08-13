@@ -1,16 +1,14 @@
 import React from 'react';
 import styles from './ingredient.module.css'
-import Modal from './../../Modal/Modal'
-import IngredientDetails from './../IngredientDetails/IngredientDetails'
 import { ingredientType } from '../../../services/types'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 
 const Ingredient = ({ data }) => {
 
   const counter = useSelector(store => store.burgerСonstructor.counter);
-  const [visible, setVisible] = React.useState(false);
 
   const [{ isDrag }, drag] = useDrag({
     type: "type",
@@ -20,26 +18,20 @@ const Ingredient = ({ data }) => {
     })
   })
 
-  const handleOpenModal = () => {
-    setVisible(true);
-  }
-  const handleCloseModal = () => {
-    setVisible(false);
-  }
 
-  const modal = (
-    <Modal title="Детали заказа" onClose={handleCloseModal}>
-      <IngredientDetails data={data} onClose={handleCloseModal}></IngredientDetails>
-    </Modal>
-  );
-
+  const location = useLocation();
+  const state = location.state;
   return (
     <>
       {!isDrag &&
         <div ref={drag} className={`${styles.ingredient} pl-4 pr-4`} >
           <Counter count={counter[data._id]} />
-          <img src={data.image} className={`${styles.ingredient__img} pl-4 pr-4`} alt={data.name} onClick={handleOpenModal} />
-          {visible && modal}
+          <Link
+            to={`/ingredient/${data._id}`}
+            state={{ ...state, background: location }}>
+            <img src={data.image} className={`${styles.ingredient__img} pl-4 pr-4`} alt={data.name} />
+          </Link>
+          {/*visible && modal*/}
           <div className={`${styles.ingredient__price * counter[data._id]} pt-1 pb-1`}>
             <p className='text text_type_digits-default pr-2'>{data.price}</p>
             <CurrencyIcon />
