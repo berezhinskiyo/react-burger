@@ -12,14 +12,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
   const { buns, sauces, mains } = useSelector(store => store.burgerIngredients);
-  /*
-    useEffect(
-      () => {
-        dispatch(fetchIngredients());
-      },
-      [dispatch]
-    );
-  */
+
   const bunsRef = React.createRef();
   const saucesRef = React.createRef()
   const mainRef = React.createRef()

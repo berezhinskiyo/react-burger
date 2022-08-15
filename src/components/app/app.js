@@ -7,6 +7,7 @@ import RegisterPage from '../../pages/register';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password';
 import ProfilePage from '../../pages/profile';
+import FeedPage from '../../pages/feed';
 import { ProvideAuth } from '../../services/auth';
 import Modal from '../modal'
 import IngredientDetails from '../burger-ingredients/ingredient-details'
@@ -15,6 +16,7 @@ import OrderDetails from '../burger-constructor/order-details'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchIngredients } from '../../services/store/ingredientsSlice';
+import { WS_CONNECTION_START } from '../../services/action-types';
 import AppHeader from '../app-header';
 
 function App() {
@@ -26,6 +28,7 @@ function App() {
   useEffect(
     () => {
       dispatch(fetchIngredients());
+      dispatch({ type: WS_CONNECTION_START });
     },
     []
   );
@@ -38,6 +41,7 @@ function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" exact={true} element={<HomePage />} />
+        <Route path="/feed" exact={true} element={<FeedPage />} />
         <Route path="/login" exact={true} element={<ProtectedRoute anonymous={true} ><LoginPage logout={false} /></ProtectedRoute>} />
         <Route path="/logout" exact={true} element={<LoginPage logout={true} />} />
         <Route path="/register" exact={true} element={<ProtectedRoute anonymous={true} ><RegisterPage /></ProtectedRoute>} />

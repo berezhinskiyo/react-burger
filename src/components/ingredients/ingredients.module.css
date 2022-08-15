@@ -1,0 +1,18 @@
+.image {
+  border-radius: 50%;
+  border: 2px solid;
+  border-image: linear-gradient(63.18deg,#801AB3 0%, #4C4CFF 100%);
+  width: 64px;
+  height: 64px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #131316;
+  position: absolute;
+  top: 0px;
+}
+
+.container{
+  position: relative;
+  height: 64px;
+}
