@@ -17,8 +17,8 @@ import FeedItem from '../feed/feed-item'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchIngredients } from '../../services/store/ingredientsSlice';
-import { WS_CONNECTION_START } from '../../services/action-types';
 import AppHeader from '../app-header';
+
 
 function App() {
 
@@ -29,7 +29,6 @@ function App() {
   useEffect(
     () => {
       dispatch(fetchIngredients());
-      dispatch({ type: WS_CONNECTION_START });
     },
     []
   );

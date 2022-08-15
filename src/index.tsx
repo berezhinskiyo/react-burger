@@ -17,6 +17,7 @@ import { socketMiddleware } from './services/middleware/socketMiddleware';
 
 import {
   WS_CONNECTION_CLOSED,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
@@ -24,11 +25,11 @@ import {
   WS_GET_MESSAGE_LOCAL,
 } from './services/action-types';
 
-const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-const wsUrlLocal = 'wss://norma.nomoreparties.space/orders/all';
+
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
@@ -38,6 +39,7 @@ const wsActions = {
 
 const wsActionsLocal = {
   wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
@@ -45,7 +47,7 @@ const wsActionsLocal = {
 };
 
 
-const enhancer =  compose(applyMiddleware(thunkMiddleware,socketMiddleware(wsUrl,wsActions),socketMiddleware(wsUrlLocal,wsActionsLocal))) ;
+const enhancer =  compose(applyMiddleware(thunkMiddleware,socketMiddleware(wsActions),socketMiddleware(wsActionsLocal))) ;
 
 const store = configureStore({
   reducer: rootReducer,

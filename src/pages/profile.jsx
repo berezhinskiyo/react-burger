@@ -14,6 +14,7 @@ export default function ProfilePage() {
   
   const isProfile = useMatch("/profile");
   const isOrders = useMatch("/profile/orders");
+  const isOrder = useMatch("/profile/orders/:id");
 
   useEffect(() => {
     if (auth.user) setValue(auth.user)
@@ -32,7 +33,7 @@ export default function ProfilePage() {
         <Link to='/profile' className={`text text_type_main-medium pt-4 ${!isProfile && "text_color_inactive"}  ${styles.link}`}>Профиль</Link>
         </li>
         <li className={styles.li}> 
-        <Link to='/profile/orders' className={`text text_type_main-medium pt-4 ${!isOrders && "text_color_inactive"}  ${styles.link}`}>История заказов</Link>
+        <Link to='/profile/orders' className={`text text_type_main-medium pt-4 ${!isOrders && !isOrder && "text_color_inactive"}  ${styles.link}`}>История заказов</Link>
         </li>
         <li className={styles.li}>  
         <Link to='/logout' className={`text text_type_main-medium pt-4 text_color_inactive ${styles.link}`}>Выход</Link>
@@ -59,7 +60,7 @@ export default function ProfilePage() {
        </span>
        </div>
        )}
-        {isOrders && (
+        {(isOrders || isOrder) && (
            <FeedList isLocal={true} />
         )}
        </div>
