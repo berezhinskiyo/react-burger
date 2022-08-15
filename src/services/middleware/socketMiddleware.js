@@ -1,4 +1,7 @@
+import { getToken } from '../../utils/cookie';
+
 export const socketMiddleware = (wsUrl, wsActions) => {
+
   return store => {
     let socket = null;
 
@@ -7,8 +10,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       const { type, payload } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
-      if (type === wsInit) {
-        socket = new WebSocket(`${wsUrl}`);
+      if (type === wsInit && getToken()) {
+        socket = new WebSocket(`${wsUrl}?token=${getToken()}`);
       }
       if (socket) {
         socket.onopen = event => {

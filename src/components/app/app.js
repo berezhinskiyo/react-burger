@@ -12,6 +12,7 @@ import { ProvideAuth } from '../../services/auth';
 import Modal from '../modal'
 import IngredientDetails from '../burger-ingredients/ingredient-details'
 import OrderDetails from '../burger-constructor/order-details'
+import FeedItem from '../feed/feed-item'
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -49,9 +50,12 @@ function App() {
         <Route path="/reset-password" exact={true} element={<ProtectedRoute anonymous={true} ><ResetPasswordPage /></ProtectedRoute>} />
 
         <Route path="/profile" exact={true} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/profile/orders" exact={true} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/profile/orders/:id" exact={true} element={<ProtectedRoute><FeedItem /></ProtectedRoute>} />
         <Route path="/order" exact={true} element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
 
         <Route path="/ingredient/:id" exact={true} element={<IngredientDetails />} />
+        <Route path="/feed/:id" exact={true} element={<ProtectedRoute><FeedItem /></ProtectedRoute>} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {background && (
@@ -61,6 +65,17 @@ function App() {
               <IngredientDetails />
             </Modal>
           } />
+          <Route path="/profile/orders/:id" exact={true} element={
+            <Modal title="" onCloseModal={closeModal}  >
+              <ProtectedRoute><FeedItem /></ProtectedRoute>
+            </Modal>
+          } />
+          <Route path="/feed/:id" exact={true} element={
+            <Modal title="" onCloseModal={closeModal}  >
+              <ProtectedRoute><FeedItem /></ProtectedRoute>
+            </Modal>
+          } />
+
           <Route path="/order" exact={true} element={
             <ProtectedRoute>
               <Modal title="" onCloseModal={closeModal} >

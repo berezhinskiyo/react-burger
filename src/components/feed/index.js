@@ -1,5 +1,5 @@
 import styles from './feed.module.css'
-import List from './feed-list'
+import FeedList from './feed-list'
 import Summary from './summary'
 import React from 'react';
 const Feed = () => {
@@ -7,7 +7,7 @@ const Feed = () => {
         <div className={styles.main}>
             <p className='text text_type_main-large pt-10 pb-6'>Лента заказов</p>
             <div className={styles.container}>
-                <List />
+                <FeedList />
                 <Summary />
             </div>
         </div>

@@ -1,6 +1,19 @@
+.container {
+  width: 640px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+
+}
+.green{
+  color: #00CCCC;
+}
+.number{
+  margin: auto;
+}
+
 .image {
-
-
 
   background: linear-gradient(to right, #801AB2, #4C4CFF);
   padding: 2px;
@@ -34,7 +47,20 @@
   mask-composite: exclude;
 }
 
-.container{
-  position: relative;
-  height: 64px;
+.container_ingredients{
+  display: flex;
+  flex-direction: column;
+}
+.container_row {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container_row_box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

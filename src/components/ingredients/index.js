@@ -8,8 +8,7 @@ const Ingredients = ({ data }) => {
             <div className={`${styles.container}`}>
                 {
                     data.map((item, i) => <div key={i}
-                        style={{ zIndex: i, left: `${i * 48}px`, backgroundImage: `url(${item.image})` }} className={`${styles.image}`}
-                        alt={item.name} ></div>)
+                        style={{ zIndex: data.length - i, left: `${i * 48}px`, top: `${-i * 64}px`, backgroundImage: `url(${item.image})` }} className={`${styles.image}`}></div>)
                 }
             </div>)
     }

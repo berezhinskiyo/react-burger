@@ -5,6 +5,10 @@ export function getCookie(name) {
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+export function getToken() {
+    const token = getCookie("accessToken")
+    return token ? token.split(' ')[1] : undefined;
+}
 
 export function setCookie(name, value, props = {}) {
     props = {
