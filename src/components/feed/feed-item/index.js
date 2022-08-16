@@ -1,19 +1,37 @@
 import { useEffect, useState } from 'react';
 import { uniqueIngredientsWithCount, calcTotal, convertIdsToImages, getStateName, convertDate } from '../../../utils/data'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './feed-item.module.css';
+import { getToken } from '../../../utils/cookie'
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../../services/action-types';
+import { wsUrl, wsUrlLocal } from '../../../services/api'
 
-const FeedItem = () => {
+const FeedItem = ({ isLocal = false }) => {
+    const dispatch = useDispatch();
     const { orders } = useSelector(store => store.orders);
     const { data } = useSelector(store => store.burgerIngredients);
     const { id } = useParams();
+    const { ordersLocal } = useSelector(store => store.ordersLocal);
 
+    useEffect(
+        () => {
+            if (isLocal === true)
+                dispatch({ type: WS_CONNECTION_START, payload: `${wsUrlLocal}?token=${getToken()}` });
+            else
+                dispatch({ type: WS_CONNECTION_START, payload: wsUrl });
 
-    if (orders?.length > 0) {
+            return () => {
+                dispatch({ type: WS_CONNECTION_CLOSED });
+            };
+        },
+        []
+    );
 
-        const order = orders.find(item => item._id === id);
+    if ((isLocal === true && ordersLocal?.length > 0) || (isLocal === false && orders?.length > 0)) {
+
+        const order = isLocal === true ? ordersLocal.find(item => item._id === id) : orders.find(item => item._id === id);
         const source_ingredients = convertIdsToImages(data, order.ingredients);
         const ingredients = uniqueIngredientsWithCount(source_ingredients);
         const total = calcTotal(source_ingredients);

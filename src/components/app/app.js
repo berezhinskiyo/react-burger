@@ -50,11 +50,11 @@ function App() {
 
         <Route path="/profile" exact={true} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/profile/orders" exact={true} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/profile/orders/:id" exact={true} element={<ProtectedRoute><FeedItem /></ProtectedRoute>} />
+        <Route path="/profile/orders/:id" exact={true} element={<ProtectedRoute><FeedItem isLocal={true} /></ProtectedRoute>} />
         <Route path="/order" exact={true} element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
 
         <Route path="/ingredient/:id" exact={true} element={<IngredientDetails />} />
-        <Route path="/feed/:id" exact={true} element={<ProtectedRoute><FeedItem /></ProtectedRoute>} />
+        <Route path="/feed/:id" exact={true} element={<FeedItem isLocal={false} />} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {background && (
@@ -66,12 +66,12 @@ function App() {
           } />
           <Route path="/profile/orders/:id" exact={true} element={
             <Modal title="" onCloseModal={closeModal}  >
-              <ProtectedRoute><FeedItem /></ProtectedRoute>
+              <ProtectedRoute><FeedItem isLocal={true} /></ProtectedRoute>
             </Modal>
           } />
           <Route path="/feed/:id" exact={true} element={
             <Modal title="" onCloseModal={closeModal}  >
-              <ProtectedRoute><FeedItem /></ProtectedRoute>
+              <FeedItem isLocal={false} />
             </Modal>
           } />
 

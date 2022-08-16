@@ -7,7 +7,7 @@ import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../../services/act
 import { useEffect } from 'react';
 
 
-const FeedList = (isLocal = false) => {
+const FeedList = ({ isLocal = false }) => {
     const dispatch = useDispatch();
     const { orders } = useSelector(store => store.orders);
     const { ordersLocal } = useSelector(store => store.ordersLocal);
@@ -28,7 +28,7 @@ const FeedList = (isLocal = false) => {
 
         <div className={`${styles.container} pb-6`}>
 
-            {isLocal ? ordersLocal?.map(m => <FeedListItem key={m._id} feedItem={m} />) : orders?.map(m => <FeedListItem key={m._id} feedItem={m} />)}
+            {isLocal === true ? ordersLocal?.map(m => <FeedListItem key={m._id} feedItem={m} />) : orders?.map(m => <FeedListItem key={m._id} feedItem={m} />)}
         </div>
     );
 }
