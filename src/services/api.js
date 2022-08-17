@@ -1,5 +1,7 @@
 import { getCookie, setCookie, deleteCookie } from '../utils/cookie';
 const URL = 'https://norma.nomoreparties.space/api';
+export const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+export const wsUrlLocal = 'wss://norma.nomoreparties.space/orders';
 
 const checkResponse = (res) => res.ok ? res.json() : Promise.reject(res);
 
@@ -12,7 +14,10 @@ export const getIngredients = () => {
 export const postOrders = (ingredients) => {
 
     return fetch(`${URL}/orders`, {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: getCookie('accessToken')
+        },
         method: "POST",
         body: JSON.stringify({ ingredients: ingredients })
     })

@@ -1,0 +1,14 @@
+.container {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 60px;
+}
+
+.main {
+  margin: auto;
+  width: 1240px;
+  display: flex;
+  flex-direction: column;
+}

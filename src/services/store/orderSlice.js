@@ -33,6 +33,9 @@ const orderSlice = createSlice({
     reducers: {
         createOrder(state, action) {
             state.num = action.payload.order.number;
+        },
+        restOrder(state, action) {
+            state.num = 0;
         }
     },
     extraReducers: {
@@ -55,5 +58,5 @@ const orderSlice = createSlice({
 });
 
 const { createOrder } = orderSlice.actions;
-
+export const restOrder = orderSlice.actions.restOrder;
 export default orderSlice.reducer;

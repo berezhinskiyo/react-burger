@@ -12,7 +12,42 @@ import { BrowserRouter } from "react-router-dom";
 
 
 
-const enhancer = compose(applyMiddleware(thunkMiddleware));
+
+import { socketMiddleware } from './services/middleware/socketMiddleware';
+
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_CLOSE,
+  WS_CONNECTION_ERROR,
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_GET_MESSAGE,
+  WS_GET_MESSAGE_LOCAL,
+} from './services/action-types';
+
+
+
+const wsActions = {
+  wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE
+};
+
+
+const wsActionsLocal = {
+  wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE_LOCAL
+};
+
+
+const enhancer =  compose(applyMiddleware(thunkMiddleware,socketMiddleware(wsActions),socketMiddleware(wsActionsLocal))) ;
 
 const store = configureStore({
   reducer: rootReducer,

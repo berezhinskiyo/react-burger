@@ -1,0 +1,26 @@
+.container {
+  width: 580px;
+  display: flex;
+  flex-direction: column;
+}
+.container_row {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+
+}
+.container_column {
+  width: 272px;
+  height: 165px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.container_column_header {
+  display: flex;
+  flex-direction: column;
+}
+.ready {
+  color: #00CCCC;
+}
+
