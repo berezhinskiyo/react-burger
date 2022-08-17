@@ -54,3 +54,14 @@ export const convertDate = (date) => {
     return `${day}, ${trueDate.getHours()}:${trueDate.getMinutes()} i-GMT${trueDate.getTimezoneOffset() < 0 ? '+' : '-'}${Math.abs(trueDate.getTimezoneOffset()) / 60}`;
 }
 
+
+export const getIngredients = (counter) => {
+    const result = [];
+    for (const [key, value] of Object.entries(counter)) {
+        for (let i = 0; i < value; i++)
+            result.push(key)
+    }
+    return result;
+}
+
+

@@ -15,7 +15,7 @@ import OrderDetails from '../burger-constructor/order-details'
 import FeedItem from '../feed/feed-item'
 
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from '../../services/store/ingredientsSlice';
 import AppHeader from '../app-header';
 
@@ -26,6 +26,8 @@ function App() {
   const location = useLocation();
   const state = location.state;
   const background = state?.background;
+  const counter = useSelector(store => store.burgerСonstructor.counter);
+
   useEffect(
     () => {
       dispatch(fetchIngredients());
@@ -35,6 +37,10 @@ function App() {
   const navigate = useNavigate();
   const closeModal = () => {
     navigate(-1);
+  };
+  const closeModalOrderDetail = () => {
+    if (Object.keys(counter)?.length === 0)
+      navigate(-1);
   };
   return (
     <ProvideAuth>
@@ -77,7 +83,7 @@ function App() {
 
           <Route path="/order" exact={true} element={
             <ProtectedRoute>
-              <Modal title="" onCloseModal={closeModal} >
+              <Modal title="" onCloseModal={closeModalOrderDetail} >
                 <OrderDetails />
               </Modal>
             </ProtectedRoute>} />
