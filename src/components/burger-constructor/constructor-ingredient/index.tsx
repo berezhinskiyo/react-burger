@@ -1,3 +1,4 @@
+
 import { FC, useRef } from 'react';
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from '../../../hooks';
@@ -50,7 +51,7 @@ const ConstructorIngredient : FC<
             (item as {index: number}).index = hoverIndex
         },
     })
-    const [{ isDragging }, drag] = useDrag({
+    const [{  }, drag] = useDrag({
         type: "ConstructorIngredient",
         item: () => {
 

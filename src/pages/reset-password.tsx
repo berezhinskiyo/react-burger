@@ -7,7 +7,7 @@ import { useAuth } from '../services/auth';
 
 type TLocationState = {
   from: {
-    pathname: any;
+    pathname: string;
   }
 }
 export default function ResetPasswordPage() {  
@@ -28,7 +28,7 @@ export default function ResetPasswordPage() {
     (e : FormEvent) => {
       e.preventDefault();
       let is_ok  = false;
-      auth!.resetPassword({password :form.password, token: form.code}).then(res=> is_ok = res != undefined ? true : res!);
+      auth!.resetPassword({password :form.password, token: form.code}).then(res=> is_ok = res !== undefined ? true : res!);
       setIsOk(is_ok);
       //setIsOk(auth!.resetPassword(form));
     },
