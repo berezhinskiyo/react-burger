@@ -1,5 +1,5 @@
 
-import { useContext, useState, createContext, FunctionComponent, PropsWithChildren  } from 'react';
+import { useContext, useState, createContext, PropsWithChildren  } from 'react';
 import { getCookie, setCookie, deleteCookie } from '../utils/cookie';
 import { loginRequest, getUserRequest, logoutRequest, registerRequest, passwordResetRequest, resetRequest} from './api';
 

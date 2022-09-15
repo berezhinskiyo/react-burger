@@ -5,9 +5,9 @@ export function getCookie  (name : string) : string|undefined{
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
-export function getToken()  : string|undefined{
+export function getToken()  : string|null{
     const token = getCookie("accessToken")
-    return token ? token.split(' ')[1] : undefined;
+    return token ? token.split(' ')[1] : null;
 }
 type TProp = {
    [id: string]: any;

@@ -18,7 +18,7 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
       const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
 
 
-      if (type === wsInit) {
+      if (type === wsInit && payload) {
         socket = new WebSocket(`${payload}`);
       } else if (type === wsClose) {
         socket!.close(1000, 'regular close')

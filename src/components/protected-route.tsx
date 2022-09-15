@@ -13,7 +13,7 @@ const  ProtectedRoute : FC<{ anonymous:boolean; children?: ReactNode;}>= ({anony
   }, []);
 
   const location = useLocation();
-  const  from  = (location.state as {from : string}).from || '/';
+  const  from  = (location.state as {from : string})?.from || '/';
 
 
   //const from = location.state?.from || '/';

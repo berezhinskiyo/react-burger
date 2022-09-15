@@ -2,13 +2,12 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START,
   WS_GET_MESSAGE_LOCAL,
   TWSAction,
   
 } from '../action-types';
 import {TWSInitialStateLocal} from '../../utils/data'
-import { TOrder } from '../../types';
+
 
 
 const initialState:TWSInitialStateLocal = {
