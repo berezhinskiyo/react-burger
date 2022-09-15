@@ -24,10 +24,10 @@ export const uniqueIngredients = (ingredients: Array<TIngredientShort>): Array<T
 
 }
 export type TIngredientCount = {
-    item: TIngredient;
+    item: TIngredientShort;
     count: number;
 }
-export const uniqueIngredientsWithCount = (ingredients: Array<TIngredient>): Array<TIngredientCount> => {
+export const uniqueIngredientsWithCount = (ingredients: Array<TIngredientShort>): Array<TIngredientCount> => {
     const res = ingredients.filter((v, i, arr) => arr.findIndex((item) => item.id === v.id) === i);
     return res.map(i => {
         const count = ingredients.filter(i1 => i1.id === i.id).length;
@@ -80,4 +80,6 @@ export type TWSInitialState = {
     totalToday: number;
     total: number;
 }
+
+export type TWSInitialStateLocal = TWSInitialState & { ordersLocal: Array<TOrder> };
 

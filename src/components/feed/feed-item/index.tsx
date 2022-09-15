@@ -13,7 +13,7 @@ const FeedItem = ({ isLocal = false }) => {
     const { orders } = useSelector(store => store.orders);
     const { data } = useSelector(store => store.burgerIngredients);
     const { id } = useParams();
-    const  ordersLocal  = useSelector(store => store.ordersLocal);
+    const  {ordersLocal}  = useSelector(store => store.ordersLocal);
 
     useEffect(
         () => {
@@ -32,14 +32,14 @@ const FeedItem = ({ isLocal = false }) => {
     if ((isLocal === true && ordersLocal?.length > 0) || (isLocal === false && orders?.length > 0)) {
 
         const order = isLocal === true ? ordersLocal.find(item => item._id === id) : orders.find(item => item._id === id);
-        const source_ingredients = convertIdsToImages(data, order.ingredients);
+        const source_ingredients = convertIdsToImages(data!, order?.ingredients!);
         const ingredients = uniqueIngredientsWithCount(source_ingredients);
         const total = calcTotal(source_ingredients);
         return (
             <div className={styles.container}>
-                <p className={`text text_type_digits-default ${styles.number} `}> #{order.number}</p>
-                <p className='text text_type_main-default pt-10'>{order.name}</p>
-                <p className={`${styles.green} text text_type_main-small pt-10`}>{getStateName(order.status)}</p>
+                <p className={`text text_type_digits-default ${styles.number} `}> #{order?.number}</p>
+                <p className='text text_type_main-default pt-10'>{order?.name}</p>
+                <p className={`${styles.green} text text_type_main-small pt-10`}>{getStateName(order?.status!)}</p>
                 <p className='text text_type_main-default pt-5'>Состав:</p>
                 <div className={`${styles.container_ingredients} pt-6`}>
                     {ingredients.map((item, i) => (
@@ -50,14 +50,14 @@ const FeedItem = ({ isLocal = false }) => {
                             </div>
                             <div className={`${styles.container_row_box}`}>
                                 <p className={`text  text_type_digits-default pr-2`}> {`${item.count} x ${item.item.price}`}</p>
-                                <CurrencyIcon />
+                                <CurrencyIcon type='primary' />
                             </div>
                         </div>
                     ))}
                 </div>
                 <div className={`${styles.container_row} pt-10 pd-10`}>
-                    <p className='text text_type_main-small text_color_inactive '> {`${convertDate(order.createdAt)}`}</p>
-                    <div className={`${styles.container_row_box}`}><p className='text text_type_digits-default pr-2'> {total}</p><CurrencyIcon /></div>
+                    <p className='text text_type_main-small text_color_inactive '> {`${convertDate(order?.createdAt)}`}</p>
+                    <div className={`${styles.container_row_box}`}><p className='text text_type_digits-default pr-2'> {total}</p><CurrencyIcon type='primary' /></div>
                 </div>
             </div>
         );

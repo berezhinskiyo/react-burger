@@ -13,8 +13,8 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
 
     let socket: WebSocket | null = null;
     return (next) => (action) => {
-      const dispatch =  useDispatch();
-      //const { dispatch, getState } = store;
+     //const dispatch =  useDispatch();
+      const { dispatch, getState } = store;
       const { type, payload } = action;
       const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
 

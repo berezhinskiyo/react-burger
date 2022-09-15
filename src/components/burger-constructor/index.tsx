@@ -13,7 +13,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../services/auth';
 
 import { useEffect } from 'react';
-import { TConstructorItem } from '../../types';
+import { TConstructorItem, TIngredient } from '../../types';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
 const BurgerConstructor = () => {
@@ -45,7 +45,7 @@ const BurgerConstructor = () => {
     }),
     drop(ingredient) {
       //ActionCreatorWithPayload<{payload: number, type: string}>
-      dispatch(addIngredient(ingredient));
+      dispatch(addIngredient(ingredient as TIngredient));
     },
   });
 

@@ -2,15 +2,16 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
   WS_GET_MESSAGE_LOCAL,
   TWSAction,
   
 } from '../action-types';
-import {TWSInitialState} from '../../utils/data'
+import {TWSInitialStateLocal} from '../../utils/data'
 import { TOrder } from '../../types';
 
 
-const initialState:TWSInitialState & { ordersLocal: Array<TOrder>;} = {
+const initialState:TWSInitialStateLocal = {
   wsConnected: false,
   orders: [],
   ordersLocal: [],
@@ -18,13 +19,13 @@ const initialState:TWSInitialState & { ordersLocal: Array<TOrder>;} = {
   total: 0
 };
 
-export const wsReducerLocal = (state : TWSInitialState = initialState, action:TWSAction) => {
+export const wsReducerLocal = (state : TWSInitialStateLocal = initialState, action:TWSAction) => {
   switch (action.type) {
-    case WS_CONNECTION_SUCCESS:
-      return {
-        ...state,
-        wsConnected: true
-      };
+      case WS_CONNECTION_SUCCESS:
+        return {
+          ...state,
+          wsConnected: true
+        };
 
     case WS_CONNECTION_ERROR:
       return {

@@ -29,7 +29,6 @@ export const rootReducer = combineReducers({
   ordersLocal: wsReducerLocal
 
 });
-
 const wsActions: TWSActions = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_CLOSE,
