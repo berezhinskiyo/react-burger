@@ -2,8 +2,7 @@ import { FC, useRef } from 'react';
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from '../../../hooks';
 import styles from './constructor-ingredient.module.css'
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { constructorIngredientType } from '../../../services/types'
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveIngredient } from '../../../services/store/constructorSlice';
 
 

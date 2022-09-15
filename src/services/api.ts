@@ -1,9 +1,9 @@
-
 import { getCookie, setCookie, deleteCookie } from '../utils/cookie';
+import { TRes, TEmailOnly, TEmail, TName, TPassword } from '../types';
 const URL = 'https://norma.nomoreparties.space/api';
 export const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 export const wsUrlLocal = 'wss://norma.nomoreparties.space/orders';
-import { TRes, TEmailOnly, TEmail, TName, TPassword } from '../types';
+
 
 
 const checkResponse = <T>(res: Response): Promise<T> => {

@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { ProtectedRoute } from '../protected-route';
+import  ProtectedRoute  from '../protected-route';
 import NotFound404 from '../../pages/not-found';
 import HomePage from '../../pages/home';
 import LoginPage from '../../pages/login';
@@ -58,10 +58,10 @@ function App() {
         <Route path="/forgot-password"  element={<ProtectedRoute anonymous={true} ><ForgotPasswordPage /></ProtectedRoute>} />
         <Route path="/reset-password"  element={<ProtectedRoute anonymous={true} ><ResetPasswordPage /></ProtectedRoute>} />
 
-        <Route path="/profile"  element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/profile/orders"  element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/profile/orders/:id"  element={<ProtectedRoute><FeedItem isLocal={true} /></ProtectedRoute>} />
-        <Route path="/order"  element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+        <Route path="/profile"  element={<ProtectedRoute anonymous={false}><ProfilePage /></ProtectedRoute>} />
+        <Route path="/profile/orders"  element={<ProtectedRoute anonymous={false}><ProfilePage /></ProtectedRoute>} />
+        <Route path="/profile/orders/:id"  element={<ProtectedRoute anonymous={false}><FeedItem isLocal={true} /></ProtectedRoute>} />
+        <Route path="/order"  element={<ProtectedRoute anonymous={false}><OrderDetails /></ProtectedRoute>} />
 
         <Route path="/ingredient/:id"  element={<IngredientDetails />} />
         <Route path="/feed/:id"  element={<FeedItem isLocal={false} />} />
@@ -76,7 +76,7 @@ function App() {
           } />
           <Route path="/profile/orders/:id"  element={
             <Modal title="" onCloseModal={closeModal}  >
-              <ProtectedRoute><FeedItem isLocal={true} /></ProtectedRoute>
+              <ProtectedRoute anonymous={false}><FeedItem isLocal={true} /></ProtectedRoute>
             </Modal>
           } />
           <Route path="/feed/:id"  element={
@@ -86,7 +86,7 @@ function App() {
           } />
 
           <Route path="/order"  element={
-            <ProtectedRoute>
+            <ProtectedRoute anonymous={false}>
               <Modal title="" onCloseModal={closeModalOrderDetail} >
                 <OrderDetails />
               </Modal>

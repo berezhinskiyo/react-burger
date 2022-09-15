@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback} from 'react';
+import { FormEvent, useCallback} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
@@ -11,12 +11,12 @@ export default function RegisterPage() {
 
   let auth = useAuth();
  
-  const [form, onChange] = useForm<TName>({ email: '', password: '' ,name:''});
+  const {form, onChange} = useForm<TName>({ email: '', password: '' ,name:''});
 
   let send = useCallback(
     (e:FormEvent) => {
       e.preventDefault();
-      auth!.signUp(form as TName);
+      auth!.signUp(form);
     },
     [form,auth]
   );
@@ -38,13 +38,13 @@ export default function RegisterPage() {
       
         <p className={`text text_type_main-medium ${styles.header} `}>Регистрация</p>
         <span className={`${styles.field} pt-6`}>
-          <Input  name="name"   placeholder={'Имя'}   value={(form as TName).name} onChange={onChange as (event: ChangeEvent<HTMLInputElement>)=>void}></Input>
+          <Input  name="name"   placeholder={'Имя'}   value={form.name} onChange={onChange}></Input>
         </span>
         <span className={`${styles.field} pt-6`}>
-          <Input  name="email"   placeholder={'E-mail'}   value={(form as TName).email} onChange={onChange as (event: ChangeEvent<HTMLInputElement>)=>void}></Input>
+          <Input  name="email"   placeholder={'E-mail'}   value={form.email} onChange={onChange}></Input>
         </span>
         <span className={`${styles.field} pt-6`}>
-          <PasswordInput  name="password" value={(form as TName).password} onChange={onChange as (event: ChangeEvent<HTMLInputElement>)=>void}></PasswordInput>
+          <PasswordInput  name="password" value={(form).password} onChange={onChange}></PasswordInput>
         </span>
         <span className={`${styles.button} pt-6`}>
           <Button type = 'primary'>Зарегистрироваться</Button>
