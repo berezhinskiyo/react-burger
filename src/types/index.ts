@@ -42,7 +42,7 @@ export type TRes = Response & {
     success: boolean;
     accessToken?: string;
     refreshToken?: string;
-    user: string;
+    user: {name:string; email: string};
 }
 export type TEmailOnly = {
     email: string;

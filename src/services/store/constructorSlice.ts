@@ -1,8 +1,8 @@
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { bun } from '../../utils/data';
 import { v4 as uuidv4 } from 'uuid';
-import { TIngredient, TIngredientShort, TOrder, IDictionary, TConstructorItem } from '../../types';
+import { IDictionary, TConstructorItem } from '../../types';
 
 
 function arrayMove(arr: Array<any>, fromIndex: number, toIndex: number) {
@@ -26,7 +26,7 @@ const constructorSlice = createSlice({
     name: 'constructor',
     initialState,
     reducers: {
-        addIngredient(state, action: PayloadAction<TIngredient>) {
+        addIngredient(state, action) {
 
 
             if (action.payload.type === bun) {

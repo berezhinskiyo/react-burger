@@ -13,8 +13,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../services/auth';
 
 import { useEffect } from 'react';
-import { TConstructorItem, TIngredient } from '../../types';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { TConstructorItem } from '../../types';
 
 const BurgerConstructor = () => {
 
@@ -44,8 +43,7 @@ const BurgerConstructor = () => {
       itemData: monitor.getItem()
     }),
     drop(ingredient) {
-      //ActionCreatorWithPayload<{payload: number, type: string}>
-      dispatch(addIngredient(ingredient as TIngredient));
+      dispatch(addIngredient(ingredient));
     },
   });
 
@@ -114,14 +112,14 @@ const BurgerConstructor = () => {
         {auth!.user && (<Link
           to={!bun ? '#' : `/order`}
           state={{ ...(state as object), background: location }}>
-          <Button type="primary" disabled={!bun}>
+          <Button  type="primary"  disabled={!bun}>
             Оформить заказ
           </Button>
         </Link>)}
-        {auth!.user && (<Link
+        {!auth!.user && (<Link
           to={`/login`}
           state={{ ...(state as object), from: location }}>
-          <Button type="primary" disabled={!bun}>
+          <Button type="primary"  disabled={!bun}>
             Оформить заказ
           </Button>
         </Link>)}

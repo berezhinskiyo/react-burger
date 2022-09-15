@@ -2,10 +2,10 @@
 import styles from './order-details.module.css'
 import done from '../../../image/done.svg'
 import { useSelector, useDispatch } from '../../../hooks';
-import { fetchOrder } from '../../../services/store/orderSlice';
+import { fetchOrder,restOrder } from '../../../services/store/orderSlice';
 import { useEffect } from 'react';
 import { getIngredients } from '../../../utils/data'
-import { restOrder } from '../../../services/store/orderSlice'
+
 
 const OrderDetails = () => {
     const dispatch = useDispatch();

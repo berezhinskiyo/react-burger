@@ -5,7 +5,7 @@ import { convertIdsToImages, calcTotal, uniqueIngredients, convertDate } from '.
 import { useSelector } from '../../../../hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './item.module.css';
-import { TIngredient, TIngredientShort, TOrder } from '../../../../types';
+import { TIngredientShort, TOrder } from '../../../../types';
 
 const FeedListItem:FC<{feedItem:TOrder}> = ({feedItem} ) => {
     const { data } = useSelector(store => store.burgerIngredients);

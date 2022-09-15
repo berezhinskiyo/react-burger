@@ -34,7 +34,7 @@ export function useProvideAuth() : ProviderType{
         //.then(res => res.json())
         .then(data => {
           if (data.success) {
-            setUser(data.user);
+            setUser(data.user.name);
           }
           return data.success;
         }).catch(() => {
@@ -67,7 +67,7 @@ export function useProvideAuth() : ProviderType{
         .then(res => _login(res))
 
       if (data.success) {
-        setUser(data.user);
+        setUser(data.user?.name);
       }
     } catch (e) {
       console.log(e);
@@ -83,7 +83,7 @@ export function useProvideAuth() : ProviderType{
       const data = await registerRequest({email, password, name})
         .then(res => _login(res))
       if (data.success) {
-        setUser(data.user);
+        setUser(data.user?.name);
       }
     } catch (e) {
       console.log(e);

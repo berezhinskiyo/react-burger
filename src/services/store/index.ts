@@ -5,7 +5,7 @@ import constructorReducer from './constructorSlice';
 import { wsReducer } from './wsReducer';
 import { wsReducerLocal } from './wsReducerLocal';
 import { configureStore } from '@reduxjs/toolkit'
-import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 import { socketMiddleware } from '../middleware/socketMiddleware';
 import { TWSAction } from '../action-types';
 import { TWSActions } from '../../types';
