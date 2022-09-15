@@ -66,4 +66,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   TApplicationActions
 >;
 
-export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+export type AppDispatch = typeof store.dispatch;//ThunkDispatch<RootState, uknown, TApplicationActions>;

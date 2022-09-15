@@ -42,7 +42,7 @@ const orderSlice = createSlice({
         createOrder(state, action) {
             state.num = action.payload.order.number;
         },
-        restOrder(state, action) {
+        restOrder(state) {
             state.num = 0;
         }
     },
