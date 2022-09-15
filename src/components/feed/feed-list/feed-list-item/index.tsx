@@ -7,7 +7,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import styles from './item.module.css';
 import { TIngredient, TIngredientShort, TOrder } from '../../../../types';
 
-const FeedListItem:FC<TOrder> = (feedItem ) => {
+const FeedListItem:FC<{feedItem:TOrder}> = ({feedItem} ) => {
     const { data } = useSelector(store => store.burgerIngredients);
     const [ingredients, SetIngredients] = useState<Array<TIngredientShort>>([])
     const location = useLocation();

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { uniqueIngredientsWithCount, calcTotal, convertIdsToImages, getStateName, convertDate } from '../../../utils/data'
 import { useSelector, useDispatch } from '../../../hooks';
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { getToken } from '../../../utils/cookie'
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../../services/action-types';
 import { wsUrl, wsUrlLocal } from '../../../services/api'
 
-const FeedItem = ({ isLocal = false }) => {
+const FeedItem:FC<{isLocal:boolean;}> = ({ isLocal = false }) => {
     const dispatch = useDispatch();
     const { orders } = useSelector(store => store.orders);
     const { data } = useSelector(store => store.burgerIngredients);
@@ -61,7 +61,7 @@ const FeedItem = ({ isLocal = false }) => {
                 </div>
             </div>
         );
-    }
+    } else return <></>;
 
 }
 export default FeedItem;

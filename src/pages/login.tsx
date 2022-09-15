@@ -1,21 +1,22 @@
-import { FC, FormEvent, useCallback ,useEffect} from 'react';
+import { ChangeEvent, FC, FormEvent, useCallback ,useEffect} from 'react';
 import {Link,Navigate,useLocation} from 'react-router-dom';
 import baseStyles from './home.module.css';
 import styles from './login.module.css';
 import { Button, PasswordInput,Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAuth } from '../services/auth';
 import useForm from '../hooks/useForm';
+import { TEmail } from '../types';
 
 const LoginPage:FC<{logout:boolean;}> = ({logout}) => {  
   let auth = useAuth();
   const location = useLocation();
 
-  const [form, onChange] = useForm({ email: '', password: ''});
+  const [form, onChange] = useForm<TEmail>({ email: '', password: ''});
  
   const login = useCallback(
     (e : FormEvent) => {
       e.preventDefault();
-      auth!.signIn(form);
+      auth!.signIn(form as TEmail);
     },
     [form,auth]
   );
@@ -41,10 +42,10 @@ const LoginPage:FC<{logout:boolean;}> = ({logout}) => {
       
           <p className={`text text_type_main-medium ${styles.header} `}>Вход</p>
           <span className={`${styles.field} pt-6`}>
-        <Input  name="email"   placeholder={'E-mail'}   value={form.email} onChange={onChange}></Input>
+        <Input  name="email"   placeholder={'E-mail'}   value={(form as TEmail).email} onChange={onChange as (event: ChangeEvent<HTMLInputElement>)=>void}></Input>
         </span>
         <span className={`${styles.field} pt-6`}>
-        <PasswordInput   name="password" value={form.password} onChange={onChange}></PasswordInput>
+        <PasswordInput   name="password" value={(form as TEmail).password} onChange={onChange as  (event: ChangeEvent<HTMLInputElement>)=>void}></PasswordInput>
         </span>
           <span className={`${styles.button} pt-6`}>
           <Button  type='primary' >
